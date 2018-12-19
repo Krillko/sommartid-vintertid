@@ -23,6 +23,14 @@
       <p>{{ name }}</p>
       <div v-if="name">
         <nuxt-child/>
+
+        <Daylight
+          :lat="getLat"
+          :long="getLong"
+          preferstart="17:00"
+          preferend="19:00"
+        />
+
       </div>
     </div>
   </section>
@@ -30,12 +38,12 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-//import CitySelect from '~/components/CitySelect.vue'
+import Daylight from '~/components/Daylight.vue'
 
 export default {
   components: {
     Logo,
-    CitySelect
+    Daylight
   },
   data() {
     return {
@@ -66,6 +74,20 @@ export default {
     fixSelected: function() {
       const instring = this.selected || ''
       return instring.charAt(0).toUpperCase() + instring.slice(1)
+    },
+    getLat: function() {
+      if (this.fixSelected in this.cities) {
+        console.log('key exists')
+        return this.cities[this.fixSelected][0]
+      }
+      return 60
+    },
+    getLong: function() {
+      if (this.fixSelected in this.cities) {
+        console.log('key exists')
+        return this.cities[this.fixSelected][1]
+      }
+      return 18
     }
   }
 }
