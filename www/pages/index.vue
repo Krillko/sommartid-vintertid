@@ -5,6 +5,21 @@
       <h1 class="title">
         index.vue
       </h1>
+      <!--
+      <CitySelect
+        :value="fixSelected"
+        :cities="cities"
+        :input="selected = $event"
+      />
+      -->
+      <select v-model="fixSelected">
+        <option
+          v-for="(value, key) in cities"
+          :key="key">
+          {{ key }}
+        </option>
+      </select>
+
       <p>{{ name }}</p>
       <div v-if="name">
         <nuxt-child/>
@@ -15,16 +30,43 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+//import CitySelect from '~/components/CitySelect.vue'
 
 export default {
   components: {
-    Logo
+    Logo,
+    CitySelect
   },
-  asyncData({ params, errors }) {
+  data() {
+    return {
+      name: 'default',
+      selected: '',
+      cities: {}
+    }
+  },
+  async asyncData({ $axios, params }) {
     // called every time before loading the component
     // as the name said, it can be async
     // Also, the returned object will be merged with your data object
-    return { name: params.name }
+    try {
+      return $axios.$get(`/cities.json`).then(res => {
+        return {
+          name: params.name,
+          selected: params.name || '',
+          cities: res
+        }
+      })
+    } catch (e) {
+      return {
+        name: 'error'
+      }
+    }
+  },
+  computed: {
+    fixSelected: function() {
+      const instring = this.selected || ''
+      return instring.charAt(0).toUpperCase() + instring.slice(1)
+    }
   }
 }
 </script>
