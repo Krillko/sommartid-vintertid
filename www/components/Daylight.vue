@@ -92,11 +92,19 @@ export default {
     },
     preferend: {
       type: String,
-      default: '17:00'
+      default: '19:00'
     },
     year: {
       type: Number,
       default: 2018
+    },
+    pointsSun: {
+      type: Number,
+      default: 5
+    },
+    pointsDawnDusk: {
+      type: Number,
+      default: 1
     }
   },
   computed: {
@@ -124,13 +132,18 @@ export default {
         sunset = times.sunset.getHours() + ':' + times.sunset.getMinutes()
         dusk = times.dusk.getHours() + ':' + times.dusk.getMinutes()
 
+        console.log(this.pointsSun)
+
         scoreNormal = getTimeScore(
           dawn,
           sunrise,
           sunset,
           dusk,
           this.preferstart,
-          this.preferend
+          this.preferend,
+          0,
+          this.pointsSun,
+          this.pointsDawnDusk
         )
 
         if (usedate.isDST()) {
@@ -142,7 +155,9 @@ export default {
             dusk,
             this.preferstart,
             this.preferend,
-            -1
+            -1,
+            this.pointsSun,
+            this.pointsDawnDusk
           )
         } else {
           alwaysSummer = getTimeScore(
@@ -152,7 +167,9 @@ export default {
             dusk,
             this.preferstart,
             this.preferend,
-            1
+            1,
+            this.pointsSun,
+            this.pointsDawnDusk
           )
           alwaysWinter = scoreNormal
         }

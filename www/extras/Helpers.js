@@ -72,7 +72,9 @@ export const getTimeScore = (
   dusk,
   preferstart,
   preferend,
-  offset = 0
+  offset = 0,
+  pointsSun = 1,
+  pointsDawnDusk = 0
 ) => {
   let minSun = timeOverlap(preferstart, preferend, sunrise, sunset, offset)
   let minDawn = timeOverlap(preferstart, preferend, dawn, sunrise, offset)
@@ -82,7 +84,8 @@ export const getTimeScore = (
     minSun: minSun,
     minDawn: minDawn,
     minDusk: minDusk,
-    score: minSun * 3 + minDawn + minDusk
+    score:
+      minSun * pointsSun + minDawn * pointsDawnDusk + minDusk * pointsDawnDusk
   }
 }
 

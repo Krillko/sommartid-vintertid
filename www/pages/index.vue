@@ -27,8 +27,10 @@
         <Daylight
           :lat="getLat"
           :long="getLong"
-          preferstart="17:00"
-          preferend="19:00"
+          :points-sun="pointsSun"
+          :points-dawn-dusk="pointsDawnDusk"
+          preferstart="7:00"
+          preferend="18:00"
         />
 
       </div>
@@ -51,7 +53,9 @@ export default {
     return {
       name: 'default',
       selected: '',
-      cities: {}
+      cities: {},
+      pointsSun: 5,
+      pointsDawnDusk: 1
     }
   },
   async asyncData({ $axios, params }) {
