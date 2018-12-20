@@ -12,7 +12,7 @@
         :input="selected = $event"
       />
       -->
-      <select v-model="fixSelected">
+      <select v-model="selected">
         <option
           v-for="(value, key) in cities"
           :key="key">
@@ -39,6 +39,8 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import Daylight from '~/components/Daylight.vue'
+import _ from 'lodash'
+import { timeOverlap } from '~/extras/Helpers.js'
 
 export default {
   components: {
@@ -57,10 +59,12 @@ export default {
     // as the name said, it can be async
     // Also, the returned object will be merged with your data object
     try {
+      let outName = _.upperFirst(params.name)
+
       return $axios.$get(`/cities.json`).then(res => {
         return {
-          name: params.name,
-          selected: params.name || '',
+          name: outName,
+          selected: outName,
           cities: res
         }
       })
@@ -76,20 +80,24 @@ export default {
       return instring.charAt(0).toUpperCase() + instring.slice(1)
     },
     getLat: function() {
-      if (this.fixSelected in this.cities) {
-        console.log('key exists')
-        return this.cities[this.fixSelected][0]
+      if (this.selected in this.cities) {
+        return this.cities[this.selected][0]
       }
       return 60
     },
     getLong: function() {
-      if (this.fixSelected in this.cities) {
-        console.log('key exists')
-        return this.cities[this.fixSelected][1]
+      if (this.selected in this.cities) {
+        return this.cities[this.selected][1]
       }
       return 18
     }
-  }
+  },
+  watch: {
+    selected() {
+      console.log('selected changed')
+    }
+  },
+  methods: {}
 }
 </script>
 

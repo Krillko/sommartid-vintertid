@@ -14,19 +14,19 @@
           <th>tid</th>
         </tr>
       </thead>
-
-      <tr
-        v-for="day in timelist"
-        :key="day.num"
-      >
-        <td>{{ day.date }}</td>
-        <td>{{ day.dawn }}</td>
-        <td>{{ day.sunrise }}</td>
-        <td>{{ day.sunset }}</td>
-        <td>{{ day.dusk }}</td>
-        <td>{{ day.dst }}</td>
-      </tr>
-
+      <tbody>
+        <tr
+          v-for="day in timelist"
+          :key="day.num"
+        >
+          <td>{{ day.date }}</td>
+          <td>{{ day.dawn }}</td>
+          <td>{{ day.sunrise }}</td>
+          <td>{{ day.sunset }}</td>
+          <td>{{ day.dusk }}</td>
+          <td>{{ day.dst }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -34,6 +34,8 @@
 <script>
 import moment from 'moment'
 import SunCalc from 'suncalc'
+import { timeOverlap } from '~/extras/Helpers.js'
+
 /*
 Kolla att använda denna:
 https://github.com/perfectline/geopoint/blob/master/geopoint.js
@@ -67,16 +69,21 @@ export default {
       moment().utcOffset(60)
       moment.locale('sv')
 
-      console.log('here')
-      console.log(this.year)
-
       let output = [],
         usedate = moment(this.year + ' 12:00:00'), // uses a time after 2 because dst starts then
         i = 0,
-        times = {}
+        times = {},
+        dawn,
+        sunrise,
+        sunset,
+        dusk
 
       while (usedate.year() === this.year) {
         times = SunCalc.getTimes(usedate.toDate(), this.lat, this.long)
+
+        let test = timeOverlap('19:0', '20:0', '18:0', '23:0')
+        console.log(test)
+
         output.push({
           num: i,
           date: usedate.format('D MMM'),
