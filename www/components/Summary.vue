@@ -1,0 +1,283 @@
+<template>
+  <span>
+    <div class="e-summary">
+      <div
+        :style="{ height: keepChanging + '%' }"
+        :class="medalkeepChanging"
+        class="e-staple"
+      >
+        <div class="p-bg"/>
+        <div class="p-main">
+          <div class="p-score">
+            <!--
+            <animated-number
+              :value="keepChanging"
+              :round="1"
+              :duration="1000"
+            />
+            -->
+            {{ keepChanging }}
+            %</div>
+        </div>
+        <Medal class="p-medal"/>
+      </div>
+
+      <div
+        :style="{ height: onlySummer + '%' }"
+        :class="medalonlySummer"
+        class="e-staple">
+        <div class="p-bg"/>
+        <div class="p-main">
+          <div class="p-score">
+            <!--
+            <animated-number
+              :value="onlySummer"
+              :round="1"
+              :duration="1000"
+            />
+            -->
+            {{ onlySummer }}
+            %</div>
+        </div>
+        <Medal class="p-medal"/>
+      </div>
+
+      <div
+        :style="{ height: onlyWinter + '%' }"
+        :class="medalonlyWinter"
+        class="e-staple">
+        <div class="p-bg"/>
+        <div class="p-main">
+          <div class="p-score">
+            <!--
+            <animated-number
+              :value="onlyWinter"
+              :round="1"
+              :duration="1000"
+            />
+            -->
+            {{ onlyWinter }}
+            %</div>
+        </div>
+        <Medal class="p-medal"/>
+      </div>
+
+    </div>
+    <div class="e-summaryCaption">
+      <div class="p-caption">
+        <img
+          src="/pics/keepChanging.svg"
+          alt="Fortsätta byta">
+        <span>Fortsätta byta</span>
+      </div>
+      <div class="p-caption">
+        <img
+          src="/pics/summertime.svg"
+          alt="Bara sommartid">
+        <span>Bara sommartid</span>
+      </div>
+      <div class="p-caption">
+        <img
+          src="/pics/wintertime.svg"
+          alt="Bara Vintertid">
+        <span>Bara Vintertid</span>
+      </div>
+    </div>
+  </span>
+</template>
+
+<script>
+import Medal from '~/assets/medal.svg'
+//import AnimatedNumber from 'animated-number-vue'
+
+export default {
+  name: 'Summary',
+  components: {
+    Medal
+    //AnimatedNumber
+  },
+  props: {
+    keepChanging: {
+      type: Number,
+      default: 100
+    },
+    onlySummer: {
+      type: Number,
+      default: 100
+    },
+    onlyWinter: {
+      type: Number,
+      default: 100
+    }
+  },
+  data: function() {
+    return {
+      medalkeepChanging: '',
+      medalonlySummer: '',
+      medalonlyWinter: ''
+    }
+  },
+  asyncData(context) {
+    // called every time before loading the component
+    // as the name said, it can be async
+    // Also, the returned object will be merged with your data object
+    return {}
+  },
+  mounted: function() {
+    //this.giveMedals()
+  },
+  updated: function() {
+    //this.giveMedals()
+  },
+  methods: {
+    giveMedals: function() {
+      let pointorder = [this.keepChanging, this.onlySummer, this.onlyWinter]
+      pointorder.sort(function(a, b) {
+        return b - a
+      })
+
+      let medalno = 0
+      let medals = ['m-gold', 'm-silver', 'm-bronze']
+      let currentMedal = 0
+      pointorder.forEach(porder => {
+        console.log('porder: ' + porder)
+        ;['keepChanging', 'onlySummer', 'onlyWinter'].forEach(param => {
+          if (this[param] === porder) {
+            medalno++
+            this['medal' + param] = medals[currentMedal]
+          }
+          /*
+          console.log(param)
+          console.log(this[param])
+          console.log(this.keepChanging)
+
+          this['medal' + param] = 'm-gold'
+          */
+        })
+        currentMedal += medalno > 1 ? 2 : 1
+        medalno = 0
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.e-summary {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  width: 800px;
+  height: 400px;
+  border-bottom: 2px solid black;
+}
+.e-summaryCaption {
+  display: flex;
+  align-items: flex-end;
+  width: 800px;
+  font-family: 'Cormorant', serif;
+  font-size: 22px;
+  .p-caption {
+    width: 33%;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+    img {
+      display: inline-block;
+      height: 20px;
+      vertical-align: baseline;
+    }
+    img,
+    span {
+      vertical-align: baseline;
+    }
+  }
+}
+.e-staple {
+  background: #7f828b;
+  width: 33%;
+  position: relative;
+  margin-left: 45px;
+  margin-right: 45px;
+  transition: height 1s;
+  .p-main {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 2px solid black;
+  }
+  .p-score {
+    font-family: 'Roboto', sans-serif;
+    font-size: 60px;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  .p-bg {
+    width: 100%;
+    height: calc(100% - 7px);
+    position: absolute;
+    bottom: 0;
+    left: 7px;
+    background: url('/pics/diagonal-lines.svg');
+    background-size: 5px;
+  }
+  .p-medal {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    height: 60px;
+  }
+  svg {
+    .place1,
+    .place2,
+    .place3 {
+      visibility: hidden;
+    }
+  }
+  &.m-gold {
+    svg {
+      .outside {
+        fill: #f5c06c;
+      }
+      #inside {
+        fill: #fae08e !important;
+      }
+      .place1 {
+        visibility: visible;
+      }
+    }
+  }
+  &.m-silver {
+    svg {
+      .outside {
+        fill: #a0a8d5;
+      }
+      #inside {
+        fill: #c5cae6 !important;
+      }
+      .place2 {
+        visibility: visible;
+      }
+    }
+  }
+  &.m-bronze {
+    svg {
+      .outside {
+        fill: #ac8f7e;
+      }
+      #inside {
+        fill: #c8b1a2 !important;
+      }
+      .place3 {
+        visibility: visible;
+      }
+    }
+  }
+}
+</style>
