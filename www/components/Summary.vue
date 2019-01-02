@@ -7,18 +7,11 @@
         class="e-staple"
       >
         <div class="p-bg"/>
-        <div class="p-main">
-          <div class="p-score">
-            <!--
-            <animated-number
-              :value="keepChanging"
-              :round="1"
-              :duration="1000"
-            />
-            -->
-            {{ keepChanging }}
-            %</div>
-        </div>
+        <div class="p-main"/>
+        <div
+          :style="{ bottom: keepChanging > 30 ? '20px': '100%'}"
+          class="p-score"
+        >{{ keepChanging }}%</div>
         <Medal class="p-medal"/>
       </div>
 
@@ -27,18 +20,11 @@
         :class="medalonlySummer"
         class="e-staple">
         <div class="p-bg"/>
-        <div class="p-main">
-          <div class="p-score">
-            <!--
-            <animated-number
-              :value="onlySummer"
-              :round="1"
-              :duration="1000"
-            />
-            -->
-            {{ onlySummer }}
-            %</div>
-        </div>
+        <div class="p-main" />
+        <div
+          :style="{ bottom: onlySummer > 30 ? '20px': '100%'}"
+          class="p-score"
+        >{{ onlySummer }}%</div>
         <Medal class="p-medal"/>
       </div>
 
@@ -47,18 +33,11 @@
         :class="medalonlyWinter"
         class="e-staple">
         <div class="p-bg"/>
-        <div class="p-main">
-          <div class="p-score">
-            <!--
-            <animated-number
-              :value="onlyWinter"
-              :round="1"
-              :duration="1000"
-            />
-            -->
-            {{ onlyWinter }}
-            %</div>
-        </div>
+        <div class="p-main"/>
+        <div
+          :style="{ bottom: onlyWinter > 30 ? '20px': '100%'}"
+          class="p-score"
+        >{{ onlyWinter }}%</div>
         <Medal class="p-medal"/>
       </div>
 
@@ -212,6 +191,8 @@ export default {
     bottom: 20px;
     width: 100%;
     text-align: center;
+    transition: bottom 0.5s;
+    transition-delay: 0.5s;
   }
   .p-bg {
     width: 100%;
