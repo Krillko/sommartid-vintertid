@@ -31,8 +31,8 @@
           :long="getLong"
           :points-sun="pointsSun"
           :points-dawn-dusk="pointsDawnDusk"
-          preferstart="21:00"
-          preferend="23:00"
+          preferstart="7:00"
+          preferend="9:00"
         />
 
       </div>

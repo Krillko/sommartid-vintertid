@@ -8,6 +8,7 @@
 
     <button @click="randomNumbers">Slumpa</button>
     <button @click="numbers1">Fixa</button>
+    <button @click="numbers2">Fixa 2</button>
   </div>
 </template>
 <script>
@@ -31,7 +32,7 @@ export default {
     return {}
   },
   updated: function() {
-    console.log('* * * * design updated')
+    //console.log('* * * * design updated')
   },
   methods: {
     randomNumbers: function() {
@@ -51,6 +52,11 @@ export default {
     numbers1: function() {
       this.keepChanging = 100
       this.onlySummer = 100
+      this.onlyWinter = 50
+    },
+    numbers2: function() {
+      this.keepChanging = 100
+      this.onlySummer = 50
       this.onlyWinter = 50
     }
   }
