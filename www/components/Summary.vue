@@ -124,10 +124,12 @@ export default {
     return {}
   },
   mounted: function() {
-    //this.giveMedals()
+    console.log('mounted')
+    this.giveMedals()
   },
-  updated: function() {
-    //this.giveMedals()
+  beforeUpdate: function() {
+    console.warn('updated')
+    this.giveMedals()
   },
   methods: {
     giveMedals: function() {
@@ -135,28 +137,47 @@ export default {
       pointorder.sort(function(a, b) {
         return b - a
       })
+      pointorder = pointorder.filter((v, i, a) => a.indexOf(v) === i)
 
+      let output = {}
+      let breaker = 0
       let medalno = 0
       let medals = ['m-gold', 'm-silver', 'm-bronze']
       let currentMedal = 0
+      let last = 0
       pointorder.forEach(porder => {
         console.log('porder: ' + porder)
-        ;['keepChanging', 'onlySummer', 'onlyWinter'].forEach(param => {
-          if (this[param] === porder) {
-            medalno++
-            this['medal' + param] = medals[currentMedal]
-          }
-          /*
+        breaker++
+        if (breaker > 50) {
+          return false
+        }
+        if (last !== porder) {
+          ;['keepChanging', 'onlySummer', 'onlyWinter'].forEach(param => {
+            console.log(param)
+            breaker++
+            if (breaker > 50) {
+              return false
+            }
+            if (this[param] === porder) {
+              medalno++
+              console.log('Match' + medals[currentMedal])
+              this['medal' + param] = medals[currentMedal]
+            }
+            /*
           console.log(param)
           console.log(this[param])
           console.log(this.keepChanging)
 
           this['medal' + param] = 'm-gold'
           */
-        })
-        currentMedal += medalno > 1 ? 2 : 1
-        medalno = 0
+          })
+          currentMedal += medalno > 1 ? 2 : 1
+          console.log('currentMedal:' + currentMedal)
+          medalno = 0
+        }
+        last = porder
       })
+      console.log(output)
     }
   }
 }

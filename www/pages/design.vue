@@ -7,6 +7,7 @@
     />
 
     <button @click="randomNumbers">Slumpa</button>
+    <button @click="numbers1">Fixa</button>
   </div>
 </template>
 <script>
@@ -19,7 +20,7 @@ export default {
   data: function() {
     return {
       keepChanging: 100,
-      onlySummer: 66,
+      onlySummer: 99,
       onlyWinter: 82
     }
   },
@@ -28,6 +29,9 @@ export default {
     // as the name said, it can be async
     // Also, the returned object will be merged with your data object
     return {}
+  },
+  updated: function() {
+    console.log('* * * * design updated')
   },
   methods: {
     randomNumbers: function() {
@@ -43,6 +47,11 @@ export default {
       this.keepChanging = results[0]
       this.onlySummer = results[1]
       this.onlyWinter = results[2]
+    },
+    numbers1: function() {
+      this.keepChanging = 100
+      this.onlySummer = 100
+      this.onlyWinter = 50
     }
   }
 }
