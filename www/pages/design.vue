@@ -55,9 +55,9 @@ export default {
       this.onlyWinter = 50
     },
     numbers2: function() {
-      this.keepChanging = 100
-      this.onlySummer = 50
-      this.onlyWinter = 50
+      this.keepChanging = 28
+      this.onlySummer = 10
+      this.onlyWinter = 25
     }
   }
 }

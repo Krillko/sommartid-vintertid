@@ -9,7 +9,7 @@
         <div class="p-bg"/>
         <div class="p-main"/>
         <div
-          :style="{ bottom: keepChanging > 30 ? '20px': '100%'}"
+          :class="{ 'm-top': (keepChanging >= 30), 'm-bottom': (keepChanging < 30) }"
           class="p-score"
         >{{ keepChanging }}%</div>
         <Medal class="p-medal"/>
@@ -22,7 +22,7 @@
         <div class="p-bg"/>
         <div class="p-main" />
         <div
-          :style="{ bottom: onlySummer > 30 ? '20px': '100%'}"
+          :class="{ 'm-top': (onlySummer >= 30), 'm-bottom': (onlySummer < 30) }"
           class="p-score"
         >{{ onlySummer }}%</div>
         <Medal class="p-medal"/>
@@ -35,7 +35,7 @@
         <div class="p-bg"/>
         <div class="p-main"/>
         <div
-          :style="{ bottom: onlyWinter > 30 ? '20px': '100%'}"
+          :class="{ 'm-top': (onlyWinter >= 30), 'm-bottom': (onlyWinter < 30) }"
           class="p-score"
         >{{ onlyWinter }}%</div>
         <Medal class="p-medal"/>
@@ -192,7 +192,13 @@ export default {
     width: 100%;
     text-align: center;
     transition: bottom 0.5s;
-    transition-delay: 0.5s;
+    &.m-top {
+      transition-delay: 0s;
+    }
+    &.m-bottom {
+      bottom: 100%;
+      transition-delay: 0.5s;
+    }
   }
   .p-bg {
     width: 100%;
