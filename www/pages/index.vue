@@ -1,10 +1,12 @@
 <template>
   <section class="container">
     <div>
-      <logo/>
-      <h1 class="title">
-        index.vue
-      </h1>
+      <p>
+        <nuxt-link to="/Stockholm">Stockholm</nuxt-link>
+        <nuxt-link to="/Malmö">Malmö</nuxt-link>
+        <nuxt-link to="/Piteå">Piteå</nuxt-link>
+      </p>
+
       <!--
       <CitySelect
         :value="fixSelected"
@@ -29,8 +31,8 @@
           :long="getLong"
           :points-sun="pointsSun"
           :points-dawn-dusk="pointsDawnDusk"
-          preferstart="7:00"
-          preferend="18:00"
+          preferstart="21:00"
+          preferend="23:00"
         />
 
       </div>
@@ -39,14 +41,12 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 import Daylight from '~/components/Daylight.vue'
 import _ from 'lodash'
 import { timeOverlap } from '~/extras/Helpers.js'
 
 export default {
   components: {
-    Logo,
     Daylight
   },
   data() {
@@ -80,6 +80,7 @@ export default {
   },
   computed: {
     fixSelected: function() {
+      console.warn(this.params)
       const instring = this.selected || ''
       return instring.charAt(0).toUpperCase() + instring.slice(1)
     },
@@ -99,6 +100,10 @@ export default {
   watch: {
     selected() {
       console.log('selected changed')
+    },
+    $route(to, from) {
+      console.log(to)
+      console.log(from)
     }
   },
   methods: {}

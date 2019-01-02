@@ -20,7 +20,7 @@ export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
     qStart = '0:0'
   }
   if (typeof qEnd === 'number') {
-    qEnd = '23:55'
+    qEnd = '23:59'
   }
 
   //console.log(targetStart.format('HH:mm'))

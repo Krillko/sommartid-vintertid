@@ -1,18 +1,14 @@
 <template>
 
   <h2 class="subtitle">
-    _name.vue
+    * {{ props }} *
   </h2>
 
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
-  },
+  components: {},
   asyncData(context) {
     // called every time before loading the component
     // as the name said, it can be async
