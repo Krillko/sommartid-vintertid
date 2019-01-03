@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hello again</h1>
+    <h1>level one index</h1>
     <nuxt-child/>
   </div>
 </template>
