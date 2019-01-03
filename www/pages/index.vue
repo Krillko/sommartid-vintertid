@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hello again</h1>
+    <h1>/index</h1>
     <nuxt-child/>
   </div>
 </template>
@@ -17,9 +17,7 @@ export default {
     // Also, the returned object will be merged with your data object
     //console.log(context)
 
-    return {
-      lorem: 'ipsum'
-    }
+    return {}
   },
   computed: {},
   watch: {},
