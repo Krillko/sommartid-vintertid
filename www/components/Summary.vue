@@ -149,8 +149,9 @@ export default {
   display: flex;
   align-items: flex-end;
   width: 800px;
-  font-family: 'Cormorant', serif;
-  font-size: 22px;
+  font-family: 'EB Garamond', serif;
+  //text-transform: lowercase;
+  font-size: 24px;
   .p-caption {
     width: 33%;
     margin-left: 20px;
@@ -158,7 +159,7 @@ export default {
     text-align: center;
     img {
       display: inline-block;
-      height: 20px;
+      height: 18px;
       vertical-align: baseline;
     }
     img,

@@ -1,0 +1,46 @@
+/*
+Keep this reset as minimal as possible,
+well, it's not a full reset, and contains some normalize also
+*/
+* {
+  box-sizing: border-box
+}
+
+html {
+  font-size: 62.5%;
+  width: 100%;
+  height: 100%;
+  -webkit-text-size-adjust: 100%
+}
+
+body {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, address, code, del, img, b, i, ol, ul, li, form, label, table, caption, thead, tr, th, td, aside, figcaption, figure, footer, header, menu, nav, section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+div, h1, h2, h3, h4, h5, h6, p, blockquote, button, pre, abbr, address, cite, del, dfn, em, img, ins, kbd, q, samp, small, var, dl, dt, dd, ol, ul, li, fieldset, legend, caption, th, td, article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary, time, mark {
+  font-family: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+span, label, strong, i, b, mark {
+  font-family: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  color: inherit
+}
+
+img {
+  display: block;
+  max-width: 100%
+}

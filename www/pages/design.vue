@@ -1,5 +1,21 @@
 <template>
   <div>
+    <div class="e-headlines">
+      <h2>Vad är bäst?</h2>
+      <h1>Sommartid <span>eller</span> Vintertid</h1>
+      <div class="p-selectors">
+        I
+        <select>
+          <option selected>Välj stad</option>
+          <option>Stockholm</option>
+        </select>
+        om man vill ha ljus
+        <select>
+          <option>efter jobbet (17:00-19:00)</option>
+        </select>
+      </div>
+    </div>
+
     <Summary
       :keep-changing="keepChanging"
       :only-summer="onlySummer"
@@ -66,5 +82,29 @@ export default {
 <style lang="scss">
 body {
   padding: 20px;
+}
+h1,
+h2,
+h3 {
+  font-weight: normal;
+}
+.e-headlines {
+  margin-bottom: 30px;
+  width: 800px;
+  h1 {
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    //display: inline;
+    font-size: 122px;
+    span {
+      font-size: 72px;
+    }
+  }
+  h2,
+  h3 {
+    font-family: 'EB Garamond', serif;
+    //display: inline;
+    font-size: 48px;
+  }
 }
 </style>

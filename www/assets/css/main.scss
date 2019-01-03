@@ -1,5 +1,8 @@
+@CHARSET "UTF-8";
+@import "reset";
+
 body {
-  background: #7f828b;
+  background: #fff;
 }
 .page-enter-active, .page-leave-active {
   transition: opacity .5s;

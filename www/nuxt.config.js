@@ -17,7 +17,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Cormorant:600|Roboto:100'
+        href: 'https://fonts.googleapis.com/css?family=EB+Garamond|Roboto:100,400,400i'
       }
     ]
   },
@@ -30,7 +30,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['~/assets/main.css'],
+  css: ['~/assets/css/main.scss'],
 
   /*
   ** Plugins to load before mounting the App
