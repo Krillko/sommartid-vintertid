@@ -1,6 +1,13 @@
 <template>
   <div class="e-daylight">
 
+
+    <Summary
+      :keep-changing="totalScores.noChangeNorm"
+      :only-summer="totalScores.alwaysSummerNorm"
+      :only-winter="totalScores.alwaysWinterNorm"
+    />
+
     <h4>{{ lat }} {{ long }}</h4>
 
 
@@ -70,6 +77,7 @@
 import moment from 'moment'
 import SunCalc from 'suncalc'
 import { timeOverlap, getTimeScore, round } from '~/extras/Helpers.js'
+import Summary from '~/components/Summary.vue'
 
 /*
 Kolla att använda denna:
@@ -77,6 +85,9 @@ https://github.com/perfectline/geopoint/blob/master/geopoint.js
  */
 export default {
   name: 'Daylight',
+  components: {
+    Summary
+  },
   props: {
     lat: {
       type: Number,

@@ -7,38 +7,92 @@
     <p>Start: {{ timeStart }}</p>
     <p>End: {{ timeEnd }}</p>
 
-    <header>
+    <main>
       <h1>Vad är bäst</h1>
-      <nav>
-        Vad är bäst i
-        <select v-model="city">
-          <option
-            v-for="(value, key) in cities"
-            :key="key">
-            {{ key }}
-          </option>
-        </select>
-        om man vill ha mest ljus
 
-      </nav>
-    </header>
+      Vad är bäst i
+      <select
+        v-model="city"
+        @change="navigate"
+      >
+        <option value="">Välj från listan</option>
+        <option
+          v-for="(value, key) in cities"
+          :key="key">
+          {{ key }}
+        </option>
+      </select>
+      om man vill ha mest ljus
+      <select
+        v-model="selectedTime"
+        @change="navigate"
+      >
+        <option
+          v-for="(value, key) in timeSelection"
+          :value="value.url"
+          :key="key"
+        >{{ (value.name) + ' (' + value.times + ')' }}</option>
+      </select>
+
+      <section v-if="showResult">
+        <Daylight
+          :lat="getLat"
+          :long="getLong"
+          :preferstart="timeStart"
+          :preferend="timeEnd"
+        />
+        <!--
+        Todo: add           :points-sun="pointsSun"
+          :points-dawn-dusk="pointsDawnDusk"
+        -->
+      </section>
+
+    </main>
 
   </div>
 </template>
 
 <script>
+import Daylight from '~/components/Daylight.vue'
+
 export default {
   name: 'FullPage',
-  components: {},
+  components: {
+    Daylight
+  },
   data() {
     return {
       showResult: false, // shows only navigation, no results
       city: '',
-      selectedTime: '',
+      selectedTime: 'ljust-efter-jobbet_17:00-19:00',
       timeStart: '00:00',
       timeEnd: '23:59',
-      timeSelection: [{ name: 'Ljust på kvällen', times: '19:00-23:00' }]
+      timeSelection: [
+        {
+          name: 'Ljust på kvällen',
+          times: '19:00-22:00',
+          url: 'ljust-på-kvällen_19:00-22:00'
+        },
+        {
+          name: 'Sena sommarkvällar',
+          times: '19:00-22:00',
+          url: 'sena-sommarkvällar_21:00-24:00'
+        },
+        {
+          name: 'Ljust före jobbet',
+          times: '06:00-08:00',
+          url: 'ljust-före-jobbet_06:00-08:00'
+        },
+        {
+          name: 'Ljust efter jobbet',
+          times: '17:00-29:00',
+          url: 'ljust-efter-jobbet_17:00-19:00'
+        }
+      ]
     }
+    /**
+     * @todo - the url field should be calculated form name and times
+     */
   },
   asyncData(context) {
     // called every time before loading the component
@@ -66,7 +120,7 @@ export default {
       let timeEnd = times2[1] + (times2[1].length === 2 ? ':00' : '')
       output.timeStart = timeStart
       output.timeEnd = timeEnd
-      output.selectedTime = timeStart + '-' + timeEnd
+      output.selectedTime = route[2]
     }
     if (route[1] && route[2]) {
       output.showResult = true
@@ -85,6 +139,30 @@ export default {
       return {
         ok: 'Error'
       }
+    }
+  },
+  computed: {
+    getLat: function() {
+      if (this.city in this.cities) {
+        return this.cities[this.city][0]
+      }
+      return 60
+    },
+    getLong: function() {
+      if (this.city in this.cities) {
+        return this.cities[this.city][1]
+      }
+      return 18
+    }
+  },
+  methods: {
+    urlencode: function(input) {
+      return input.toLowerCase().replace(/ /g, '-')
+    },
+    navigate: function() {
+      const goTo =
+        '/var-är-bäst/i-' + this.city.toLowerCase() + '/' + this.selectedTime
+      this.$router.push({ path: goTo })
     }
   }
 }

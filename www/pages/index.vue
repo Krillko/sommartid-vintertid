@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h1>/index</h1>
-    <nuxt-child/>
-  </div>
+  <nuxt-child/>
 </template>
 
 <script>
