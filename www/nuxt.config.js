@@ -36,6 +36,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/vSelect', ssr: false}
   ],
 
   /*
@@ -56,6 +57,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor: ['vue-select'],
     /*
     ** You can extend webpack config here
     */

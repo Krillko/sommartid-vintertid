@@ -39,6 +39,11 @@
         @setTimeselect="setTimeSelect"
       />
 
+      <no-ssr>
+        <v-select
+          :options="['foo','bar']"/>
+      </no-ssr>
+
       <section v-if="showResult">
         <Daylight
           :lat="getLat"
