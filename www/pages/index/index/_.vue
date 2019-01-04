@@ -85,8 +85,13 @@ export default {
         },
         {
           name: 'Ljust efter jobbet',
-          times: '17:00-29:00',
+          times: '17:00-19:00',
           url: 'ljust-efter-jobbet_17:00-19:00'
+        },
+        {
+          name: 'Ljust lite före och lite efter jobbet',
+          times: '07:00-18:00',
+          url: 'ljust-lite-före-och-lite-efter-jobbet_07:00-18:00'
         }
       ]
     }
