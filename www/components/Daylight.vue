@@ -143,7 +143,7 @@ export default {
         sunset = times.sunset.getHours() + ':' + times.sunset.getMinutes()
         dusk = times.dusk.getHours() + ':' + times.dusk.getMinutes()
 
-        console.log(this.pointsSun)
+        //console.log(this.pointsSun)
 
         scoreNormal = getTimeScore(
           dawn,
@@ -238,12 +238,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-h1,
-h2,
-h3,
-h4 {
-  font-weight: normal;
-}
 .e-daylight {
   margin-top: 40px;
   tr {

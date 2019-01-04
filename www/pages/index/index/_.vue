@@ -34,6 +34,12 @@
         >{{ (value.name) + ' (' + value.times + ')' }}</option>
       </select>
 
+      <Timeselector
+        :time-selected="timeSelected"
+        :time-selection="timeSelection"
+        @setTimeselect="setTimeSelect"
+      />
+
       <section v-if="showResult">
         <Daylight
           :lat="getLat"
@@ -54,11 +60,13 @@
 
 <script>
 import Daylight from '~/components/Daylight.vue'
+import Timeselector from '~/components/Timeselector.vue'
 
 export default {
   name: 'FullPage',
   components: {
-    Daylight
+    Daylight,
+    Timeselector
   },
   data() {
     return {
@@ -113,7 +121,7 @@ export default {
     const currentRoute = context.route.params[0]
     const route = currentRoute.split('/')
 
-    console.log(route)
+    //console.log(route)
     if (route[1]) {
       const city = route[1].split('-')
       output.city = city[1].charAt(0).toUpperCase() + city[1].slice(1)
@@ -158,6 +166,20 @@ export default {
         return this.cities[this.city][1]
       }
       return 18
+    },
+    timeSelected: function() {
+      const selected = this.timeSelection.filter(
+        result => result.url === this.selectedTime
+      )
+
+      if (selected.length === 1) {
+        return selected[0]
+      }
+
+      return {
+        name: 'Lorem ipsum',
+        times: '18:00-22:00'
+      }
     }
   },
   methods: {
@@ -168,6 +190,10 @@ export default {
       const goTo =
         '/var-är-bäst/i-' + this.city.toLowerCase() + '/' + this.selectedTime
       this.$router.push({ path: goTo })
+    },
+    setTimeSelect: function(input) {
+      console.log('setTimeSelect')
+      console.log(input)
     }
   }
 }

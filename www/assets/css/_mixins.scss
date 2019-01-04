@@ -1,0 +1,25 @@
+/**
+IMPORTANT: Only use this if we have something else for :active, link usage should be visible
+ */
+@mixin noLinkOverlay {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+@mixin noTextSelect() {
+  user-select: none;
+}
+/**
+Used on <button>
+ */
+@mixin uibutton {
+  @include noLinkOverlay;
+  @include noTextSelect;
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  // Simple click
+  &:active {
+    transform: translateY(2px) scale(0.98);
+  }
+}
