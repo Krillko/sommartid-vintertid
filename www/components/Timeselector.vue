@@ -73,7 +73,7 @@ export default {
       this.dropped = false
       this.$emit(
         'setTimeselect',
-        'ljust-mellan_' + this.fromTime + ':' + this.toTime
+        'ljust-mellan_' + this.fromTime + '-' + this.toTime
       )
     },
     hide: function() {

@@ -176,8 +176,8 @@ export default {
       }
 
       return {
-        name: 'Lorem ipsum',
-        times: '18:00-22:00'
+        name: 'mellan',
+        times: this.timeStart + '-' + this.timeEnd
       }
     }
   },
@@ -185,14 +185,19 @@ export default {
     urlencode: function(input) {
       return input.toLowerCase().replace(/ /g, '-')
     },
-    navigate: function() {
+    navigate: function(toTime = '') {
       const goTo =
-        '/var-är-bäst/i-' + this.city.toLowerCase() + '/' + this.selectedTime
+        '/var-är-bäst/i-' +
+        this.city.toLowerCase() +
+        '/' +
+        (toTime !== '' ? toTime : this.selectedTime)
+      console.log('navigate to :' + goTo)
       this.$router.push({ path: goTo })
     },
     setTimeSelect: function(input) {
       console.log('setTimeSelect')
       console.log(input)
+      this.navigate(input)
     }
   }
 }
