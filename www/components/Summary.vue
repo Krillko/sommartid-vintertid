@@ -11,7 +11,7 @@
         <div
           :class="{ 'm-top': (keepChanging >= 30), 'm-bottom': (keepChanging < 30) }"
           class="p-score"
-        >{{ keepChanging }}%</div>
+        >{{ Math.round(keepChanging) }}%</div>
         <Medal class="p-medal"/>
       </div>
 
@@ -24,7 +24,7 @@
         <div
           :class="{ 'm-top': (onlySummer >= 30), 'm-bottom': (onlySummer < 30) }"
           class="p-score"
-        >{{ onlySummer }}%</div>
+        >{{ Math.round(onlySummer) }}%</div>
         <Medal class="p-medal"/>
       </div>
 
@@ -37,7 +37,7 @@
         <div
           :class="{ 'm-top': (onlyWinter >= 30), 'm-bottom': (onlyWinter < 30) }"
           class="p-score"
-        >{{ onlyWinter }}%</div>
+        >{{ Math.round(onlyWinter) }}%</div>
         <Medal class="p-medal"/>
       </div>
 

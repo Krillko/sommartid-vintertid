@@ -76,27 +76,27 @@ export default {
       timeEnd: '23:59',
       timeSelection: [
         {
-          name: 'Ljust på kvällen',
+          name: 'på kvällen',
           times: '19:00-22:00',
           url: 'ljust-på-kvällen_19:00-22:00'
         },
         {
-          name: 'Sena sommarkvällar',
+          name: 'sent på kvällen',
           times: '19:00-22:00',
-          url: 'sena-sommarkvällar_21:00-24:00'
+          url: 'ljust-sent-på-kvällen_21:00-24:00'
         },
         {
-          name: 'Ljust före jobbet',
+          name: 'före jobbet',
           times: '06:00-08:00',
           url: 'ljust-före-jobbet_06:00-08:00'
         },
         {
-          name: 'Ljust efter jobbet',
+          name: 'efter jobbet',
           times: '17:00-19:00',
           url: 'ljust-efter-jobbet_17:00-19:00'
         },
         {
-          name: 'Ljust lite före och lite efter jobbet',
+          name: 'lite före och lite efter jobbet',
           times: '07:00-18:00',
           url: 'ljust-lite-före-och-lite-efter-jobbet_07:00-18:00'
         }
@@ -186,11 +186,13 @@ export default {
       return input.toLowerCase().replace(/ /g, '-')
     },
     navigate: function(toTime = '') {
-      const goTo =
-        '/var-är-bäst/i-' +
-        this.city.toLowerCase() +
-        '/' +
-        (toTime !== '' ? toTime : this.selectedTime)
+      console.log(toTime)
+      console.log(typeof toTime)
+      if (typeof toTime !== 'string' || toTime === '') {
+        toTime = this.selectedTime
+      }
+
+      const goTo = '/var-är-bäst/i-' + this.city.toLowerCase() + '/' + toTime
       console.log('navigate to :' + goTo)
       this.$router.push({ path: goTo })
     },
