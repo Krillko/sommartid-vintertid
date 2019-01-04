@@ -2,6 +2,7 @@
   <div class="e-dropselector a-asH3">
     om man vill ha mest ljus
     <div
+      v-click-outside="hide"
       class="p-dropable"
       @click="dropped = !dropped"
     > {{ timeSelected.name }} <span>{{ timeSelected.times }}</span>
@@ -43,8 +44,13 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
+
 export default {
   name: 'Timeselector',
+  directives: {
+    ClickOutside
+  },
   props: {
     timeSelection: {
       type: Array,
@@ -69,6 +75,9 @@ export default {
         'setTimeselect',
         'ljust-mellan_' + this.fromTime + ':' + this.toTime
       )
+    },
+    hide: function() {
+      this.dropped = false
     }
   }
 }

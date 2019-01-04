@@ -1,16 +1,15 @@
 <template>
   <div>
+    <!--
     <h1>/index/index/_.vue</h1>
     <h2>{{ currentPage }}</h2>
     <h2>{{ ok }}</h2>
     <p>City: {{ city }}</p>
     <p>Start: {{ timeStart }}</p>
     <p>End: {{ timeEnd }}</p>
-
+    -->
     <main>
-      <h1>Vad är bäst</h1>
-
-      Vad är bäst i
+      <h1>Vad är bäst i</h1>
       <select
         v-model="city"
         @change="navigate"
