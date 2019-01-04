@@ -63,6 +63,23 @@ import Timeselector from '~/components/Timeselector.vue'
 
 export default {
   name: 'FullPage',
+  head() {
+    const basetitle = 'Vad är bäst? ☀️ Sommartid eller ❄️ Vintertid'
+    if (this.city === '') {
+      return {
+        title: basetitle + ' (normaltid)'
+      }
+    }
+    return {
+      title:
+        basetitle +
+        ' i ' +
+        this.city +
+        ' (ljust ' +
+        this.timeSelected.name +
+        ')'
+    }
+  },
   components: {
     Daylight,
     Timeselector

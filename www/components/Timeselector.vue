@@ -83,7 +83,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .e-dropselector {
   padding: 10px 0;
   .p-dropable {
