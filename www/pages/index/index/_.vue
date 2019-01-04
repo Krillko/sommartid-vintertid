@@ -231,7 +231,11 @@ export default {
     },
     focusSearch: function() {
       this.showSearch = true
-      this.$refs.mySelect.$refs.search.focus()
+
+      setTimeout(() => {
+        console.log('focus')
+        this.$refs.mySelect.$refs.search.focus()
+      }, 1)
     }
   }
 }
