@@ -16,10 +16,6 @@ export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
     tStart instanceof moment ? tStart : moment('2018-11-11 ' + tStart)
   const targetEnd = tEnd instanceof moment ? tEnd : moment('2018-11-11 ' + tEnd)
 
-  if (tStart instanceof moment) {
-    console.log(targetStart)
-  }
-
   const fixdateStart =
     tStart instanceof moment ? tStart.format('YYYY-MM-DD ') : '2018-11-11 '
   const fixdateEnd =

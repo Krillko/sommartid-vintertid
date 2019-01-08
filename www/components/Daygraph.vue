@@ -11,7 +11,7 @@
       ><p>{{ theHour }}</p></div>
 
     </div>
-    {{ realstart.format('M-D HH') }} {{ realend.format('M-D HH') }} {{ hoursBetween.diff }}
+    {{ realstart.format('M-D HH:mm') }} {{ realend.format('M-D HH:mm') }} {{ hoursBetween.diffH }}
     <div class="p-graph">
       <div
         :style="{width: graphdata.night1 + '%'}"
@@ -34,6 +34,7 @@
 
 <script>
 import moment from 'moment'
+import { timeOverlap } from '~/extras/Helpers.js'
 
 export default {
   name: 'Daygraph',
@@ -70,13 +71,42 @@ export default {
   },
   computed: {
     graphdata: function() {
-      return {
-        night1: 10,
-        morning: 20,
-        daytime: 50,
-        evening: 20,
-        night2: 10
+      const periods = ['night1', 'morning', 'daytime', 'evening', 'night2']
+      let output = {},
+        qStart,
+        qEnd
+
+      for (let period of periods) {
+        switch (period) {
+          case 'night1':
+            qStart = '00:00'
+            qEnd = this.dawn
+            break
+          case 'morning':
+            qStart = this.dawn
+            qEnd = this.sunrise
+            break
+          case 'daytime':
+            qStart = this.sunrise
+            qEnd = this.sunset
+            break
+          case 'evening':
+            qStart = this.sunset
+            qEnd = this.dusk
+            break
+          case 'night2':
+            qStart = this.dusk
+            qEnd = '23:59'
+            break
+        }
+        //console.log(period + ' ' + qStart + '-' + qEnd)
+        let timediff = timeOverlap(this.realstart, this.realend, qStart, qEnd)
+        output[period] = Math.round((timediff / this.hoursBetween.diffM) * 100)
       }
+
+      console.log(output)
+
+      return output
     },
     realstart: function() {
       return moment(this.day1 + ' ' + this.preferstart).startOf('hour')
@@ -85,12 +115,11 @@ export default {
       const startday = moment(this.day1)
       let thisday = moment(this.day1 + ' ' + this.preferend)
       thisday.add(1, 'hour')
-      return thisday.endOf('hour')
+      return thisday.startOf('hour')
     },
     hoursBetween: function() {
       const diff = this.realend.diff(this.realstart, 'h')
       let hourArr = []
-      console.log(diff)
       for (let x = 0; x <= diff; x++) {
         hourArr.push(
           this.realstart
@@ -101,7 +130,8 @@ export default {
       }
 
       return {
-        diff: diff,
+        diffH: diff,
+        diffM: diff * 60,
         hourArr: hourArr,
         width: 100 / (diff - 1)
       }
