@@ -214,8 +214,6 @@ export default {
       return input.toLowerCase().replace(/ /g, '-')
     },
     navigate: function(toTime = '') {
-      console.log(toTime)
-      console.log(typeof toTime)
       if (typeof toTime !== 'string' || toTime === '') {
         toTime = this.selectedTime
       }
@@ -225,15 +223,12 @@ export default {
       this.$router.push({ path: goTo })
     },
     setTimeSelect: function(input) {
-      console.log('setTimeSelect')
-      console.log(input)
       this.navigate(input)
     },
     focusSearch: function() {
       this.showSearch = true
 
       setTimeout(() => {
-        console.log('focus')
         this.$refs.mySelect.$refs.search.focus()
       }, 1)
     }

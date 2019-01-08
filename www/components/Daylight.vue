@@ -1,12 +1,13 @@
 <template>
   <div class="e-daylight">
 
-
+    <!--
     <Summary
       :keep-changing="totalScores.noChangeNorm"
       :only-summer="totalScores.alwaysSummerNorm"
       :only-winter="totalScores.alwaysWinterNorm"
     />
+    -->
 
     <h4>{{ lat }} {{ long }}</h4>
 
@@ -29,12 +30,13 @@
           <th>minuter sol</th>
           <th>always winter</th>
           <th>always summer</th>
+          <th>graph</th>
         </tr>
       </thead>
       <tbody>
         <tr
           v-for="day in timelist"
-          v-if="day.different"
+          v-if="day.different || showAll"
           :key="day.num"
         >
           <td>{{ day.date }}</td>
@@ -67,6 +69,18 @@
             </code>
             <b>{{ day.alwaysSummer.score }}</b>
           </td>
+
+          <td>
+            <Daygraph
+              :preferstart="preferstart"
+              :preferend="preferend"
+              :dawn="day.dawn"
+              :sunrise="day.sunrise"
+              :sunset="day.sunset"
+              :dusk="day.dusk"
+            />
+          </td>
+
         </tr>
       </tbody>
     </table>
@@ -78,6 +92,7 @@ import moment from 'moment'
 import SunCalc from 'suncalc'
 import { timeOverlap, getTimeScore, round } from '~/extras/Helpers.js'
 import Summary from '~/components/Summary.vue'
+import Daygraph from '~/components/Daygraph.vue'
 
 /*
 Kolla att använda denna:
@@ -86,7 +101,8 @@ https://github.com/perfectline/geopoint/blob/master/geopoint.js
 export default {
   name: 'Daylight',
   components: {
-    Summary
+    Summary,
+    Daygraph
   },
   props: {
     lat: {
@@ -118,6 +134,11 @@ export default {
       default: 1
     }
   },
+  data() {
+    return {
+      showAll: true
+    }
+  },
   computed: {
     timelist: function() {
       moment().utcOffset(60)
@@ -138,10 +159,10 @@ export default {
 
       while (usedate.year() === this.year) {
         times = SunCalc.getTimes(usedate.toDate(), this.lat, this.long)
-        dawn = times.dawn.toTimeString().split(' ')[0]
-        sunrise = times.sunrise.toTimeString().split(' ')[0]
-        sunset = times.sunset.toTimeString().split(' ')[0]
-        dusk = times.dusk.toTimeString().split(' ')[0]
+        dawn = moment(times.dawn).format('HH:mm')
+        sunrise = moment(times.sunrise).format('HH:mm')
+        sunset = moment(times.sunset).format('HH:mm')
+        dusk = moment(times.dusk).format('HH:mm')
 
         //console.log(this.pointsSun)
 
@@ -202,6 +223,9 @@ export default {
         })
         usedate.add(1, 'd')
         i++
+        if (i > 10) {
+          break
+        }
       }
 
       return output
