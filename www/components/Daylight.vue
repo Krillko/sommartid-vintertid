@@ -124,7 +124,7 @@ export default {
       moment.locale('sv')
 
       let output = [],
-        usedate = moment(this.year + ' 12:00:00'), // uses a time after 2 because dst starts then
+        usedate = moment(this.year + '-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss'), // uses a time after 2 because dst starts then
         i = 0,
         times = {},
         dawn,
@@ -138,10 +138,10 @@ export default {
 
       while (usedate.year() === this.year) {
         times = SunCalc.getTimes(usedate.toDate(), this.lat, this.long)
-        dawn = times.dawn.getHours() + ':' + times.dawn.getMinutes()
-        sunrise = times.sunrise.getHours() + ':' + times.sunrise.getMinutes()
-        sunset = times.sunset.getHours() + ':' + times.sunset.getMinutes()
-        dusk = times.dusk.getHours() + ':' + times.dusk.getMinutes()
+        dawn = times.dawn.toTimeString().split(' ')[0]
+        sunrise = times.sunrise.toTimeString().split(' ')[0]
+        sunset = times.sunset.toTimeString().split(' ')[0]
+        dusk = times.dusk.toTimeString().split(' ')[0]
 
         //console.log(this.pointsSun)
 
