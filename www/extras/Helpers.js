@@ -3,8 +3,8 @@ import moment from 'moment'
 /**
  * Calculates how many minues of qStart/End is inside tStart/End
  * All strings in are minute:second, either 12:01 or 12:1
- * @param {string|NaN} tStart
- * @param {string|NaN} tEnd
+ * @param {string|NaN|moment} tStart
+ * @param {string|NaN|moment} tEnd
  * @param {string|NaN} qStart
  * @param {string|NaN} qEnd
  * @param {number} offset - adds or subtracts, hours
@@ -12,8 +12,18 @@ import moment from 'moment'
  */
 export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
   // The date here doesn't matter, just need to parse
-  const targetStart = moment('2018-11-11 ' + tStart)
-  const targetEnd = moment('2018-11-11 ' + tEnd)
+  const targetStart =
+    tStart instanceof moment ? tStart : moment('2018-11-11 ' + tStart)
+  const targetEnd = tEnd instanceof moment ? tEnd : moment('2018-11-11 ' + tEnd)
+
+  if (tStart instanceof moment) {
+    console.log(targetStart)
+  }
+
+  const fixdateStart =
+    tStart instanceof moment ? tStart.format('YYYY-MM-DD ') : '2018-11-11 '
+  const fixdateEnd =
+    tEnd instanceof moment ? tEnd.format('YYYY-MM-DD ') : '2018-11-11 '
 
   // check nan
   if (typeof qStart === 'number') {
@@ -23,14 +33,20 @@ export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
     qEnd = '23:59'
   }
 
-  //console.log(targetStart.format('HH:mm'))
-  //console.log(targetEnd.format('HH:mm'))
+  let queryStart = moment(fixdateStart + qStart)
+  let queryEnd = moment(fixdateStart + qEnd)
 
-  let queryStart = moment('2018-11-11 ' + qStart)
-  let queryEnd = moment('2018-11-11 ' + qEnd)
-
-  //console.log(queryStart.format('HH:mm'))
-  //console.log(queryEnd.format('HH:mm'))
+  /*
+  if (tStart instanceof moment) {
+    console.group('Test')
+    console.log(fixdateStart)
+    console.log(targetStart.format('HH:mm'))
+    console.log(targetEnd.format('HH:mm'))
+    console.log(queryStart.format('HH:mm'))
+    console.log(queryEnd.format('HH:mm'))
+    console.groupEnd()
+  }
+  */
 
   if (offset !== 0) {
     queryStart.add(offset, 'h')
