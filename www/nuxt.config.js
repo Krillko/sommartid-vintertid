@@ -11,10 +11,18 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'msapplication-TileColor', content: '#000000' },
+      { name: 'msapplication-confi', content: '/favicon/browserconfig.xml' },
+      { name: 'theme-color', content: '#ffffff' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
+      { rel: 'manifest', href: '/favicon/site.webmanifest' },
+      { rel: 'mask-icon', color: '#000000', href: '/favicon/safari-pinned-tab.svg' },
+      { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=EB+Garamond|Roboto:100,400,400i'
