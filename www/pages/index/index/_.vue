@@ -220,6 +220,7 @@ export default {
   },
   watch: {
     city: function() {
+      console.log('city: "' + this.city + '"')
       this.navigate()
     }
   },
@@ -306,6 +307,29 @@ export default {
   }
   .selected-tag {
     display: none;
+  }
+  .dropdown-toggle {
+    .clear {
+      display: none !important;
+    }
+  }
+  &.open {
+    .open-indicator {
+      &:before {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .open-indicator {
+    width: unset;
+    &:before {
+      border: none;
+      background: url('/pics/downarrow.svg') no-repeat;
+      background-size: 38px 22px;
+      width: 38px;
+      height: 22px;
+      margin-top: 6px;
+    }
   }
 
   input[type='search'] {
