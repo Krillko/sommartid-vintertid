@@ -38,18 +38,14 @@
         </div>
 
         <h2>Om man vill ha som mest ljus</h2>
+        <Timeselector
+          :time-selected="timeSelected"
+          :time-selection="timeSelection"
+          @setTimeselect="setTimeSelect"
+        />
 
       </div>
       <div class="e-bars">Bars</div>
-
-      <!--
-      <Timeselector
-        :time-selected="timeSelected"
-        :time-selection="timeSelection"
-        @setTimeselect="setTimeSelect"
-      />
-      -->
-
 
       <!--
       <section v-if="showResult">
@@ -283,6 +279,9 @@ export default {
       background-size: 38px 22px;
     }
   }
+  .e-dropselector {
+    margin: 17px 0 0 2px;
+  }
 }
 .e-citySelector {
   height: 100px;
@@ -296,6 +295,32 @@ export default {
   visibility: hidden;
   &.sActive {
     visibility: visible;
+  }
+}
+
+.e-dropselector {
+  border: 1px dashed black;
+  border-radius: 0;
+  display: inline-block;
+  font-family: 'Josefin Slab', serif;
+  font-size: 3.6rem;
+  padding: 10px 60px 10px 8px;
+  position: relative;
+  span {
+    font-size: 2.4rem;
+  }
+  .p-switch {
+    @include uibutton;
+    position: absolute;
+    right: 8px;
+    top: 19px;
+    background: url('/pics/downarrow.svg') no-repeat;
+    background-size: 38px 22px;
+    width: 38px;
+    height: 22px;
+    &.m-dropped {
+      transform: rotate(180deg);
+    }
   }
 }
 

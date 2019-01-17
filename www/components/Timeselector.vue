@@ -1,45 +1,48 @@
 <template>
-  <div class="e-dropselector a-asH3">
-    om man vill ha mest ljus
+  <div
+    v-click-outside="hide"
+    class="e-dropselector"
+    @click="dropped = !dropped"
+  > {{ timeSelected.name }} <span>({{ timeSelected.times }})</span>
+
     <div
-      v-click-outside="hide"
-      class="p-dropable"
-      @click="dropped = !dropped"
-    > {{ timeSelected.name }} <span>{{ timeSelected.times }}</span>
+      :class="{ 'm-dropped': dropped }"
+      class="p-switch"
+    />
+
+    <div
+      v-if="dropped"
+      class="p-dropresults">
+
       <div
-        v-if="dropped"
-        class="p-dropresults">
-
-        <div
-          v-for="(value, key) in timeSelection"
-          :key="key"
-          class="p-option"
-          @click="$emit('setTimeselect', value.url)"
-        >{{ value.name }} <span>{{ value.times }}</span>
-        </div>
-
-        <div
-          class="p-option m-timeselect"
-          @click.stop>
-          <form @submit.prevent>
-            Eget:
-            <label for="fromTime">Från: </label>
-            <input
-              id="fromTime"
-              v-model="fromTime"
-              type="time"
-            >
-            <label for="toTime">Från: </label>
-            <input
-              id="toTime"
-              v-model="toTime"
-              type="time"
-            >
-            <a @click.prevent="customTime">Visa</a>
-          </form>
-        </div>
+        v-for="(value, key) in timeSelection"
+        :key="key"
+        class="p-option"
+        @click="$emit('setTimeselect', value.url)"
+      >{{ value.name }} <span>{{ value.times }}</span>
       </div>
-    </div>.
+
+      <div
+        class="p-option m-timeselect"
+        @click.stop>
+        <form @submit.prevent>
+          Eget:
+          <label for="fromTime">Från: </label>
+          <input
+            id="fromTime"
+            v-model="fromTime"
+            type="time"
+          >
+          <label for="toTime">Från: </label>
+          <input
+            id="toTime"
+            v-model="toTime"
+            type="time"
+          >
+          <a @click.prevent="customTime">Visa</a>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
