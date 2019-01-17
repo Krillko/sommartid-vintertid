@@ -33,6 +33,10 @@ div, h1, h2, h3, h4, h5, h6, p, blockquote, button, pre, abbr, address, cite, de
   color: inherit;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
 span, label, strong, i, b, mark {
   font-family: inherit;
   line-height: inherit;

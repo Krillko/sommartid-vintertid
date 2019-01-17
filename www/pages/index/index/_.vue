@@ -8,37 +8,50 @@
     <p>Start: {{ timeStart }}</p>
     <p>End: {{ timeEnd }}</p>
     -->
-    <main>
-      <div class="e-h1">
-        <h1>Vad är bäst i <span
-          v-if="!showSearch"
-          @click="focusSearch"
-        >{{ city }}</span></h1>
-        <div
-          :class="{ sActive: showSearch }"
-          class="e-vSelect"
-        >
-          <no-ssr>
-            <v-select
-              ref="mySelect"
-              v-model="city"
-              :options="citiesArray"
-
-              placeholder="Välj stad"
-              @change="navigate"
-            />
-          </no-ssr>
-        </div>
+    <main class="e-main">
+      <div class="e-mainHeadline">
+        <h1>Sommartid <span>eller</span> Vintertid</h1>
       </div>
 
+      <div class="e-selectors">
+        <div class="e-citySelector">
+          <h2>Vad är bäst i <div
+            v-if="!showSearch"
+            class="p-city"
+            @click="focusSearch"
+          >{{ city }}</div></h2>
+          <div
+            :class="{ sActive: showSearch }"
+            class="e-vSelect"
+          >
+            <no-ssr>
+              <v-select
+                ref="mySelect"
+                v-model="city"
+                :options="citiesArray"
+                class="e-dropdown"
+                placeholder="välj stad"
+                @change="navigate"
+              />
+            </no-ssr>
+          </div>
+        </div>
+
+        <h2>Om man vill ha som mest ljus</h2>
+
+      </div>
+      <div class="e-bars">Bars</div>
+
+      <!--
       <Timeselector
         :time-selected="timeSelected"
         :time-selection="timeSelection"
         @setTimeselect="setTimeSelect"
       />
+      -->
 
 
-
+      <!--
       <section v-if="showResult">
         <Daylight
           :lat="getLat"
@@ -46,11 +59,12 @@
           :preferstart="timeStart"
           :preferend="timeEnd"
         />
-        <!--
-        Todo: add           :points-sun="pointsSun"
-          :points-dawn-dusk="pointsDawnDusk"
-        -->
+
+        //Todo: add           :points-sun="pointsSun"
+        //  :points-dawn-dusk="pointsDawnDusk"
+
       </section>
+      -->
 
     </main>
 
@@ -237,9 +251,44 @@ export default {
 </script>
 
 <style lang="scss">
-h1 {
-  display: inline;
+.e-main {
+  display: flex;
+  flex-wrap: wrap;
 }
+.e-mainHeadline {
+  flex-basis: 100%;
+  width: 100%;
+  max-width: 1368px;
+  padding: 8px 22px;
+  h1 {
+    span {
+      font-size: 4.8rem;
+    }
+  }
+}
+.e-selectors {
+  //background: #ededed7f;
+  flex-basis: 55%;
+  padding: 18px 27px;
+  h2 {
+    display: inline-block;
+    line-height: 3.7px;
+    .p-city {
+      display: inline-block;
+      border: 1px dashed black;
+      padding: 29px 72px 24px 12px;
+      margin-left: 8px;
+      background: url('/pics/downarrow.svg') no-repeat calc(100% - 10px) 20px;
+      background-size: 38px 22px;
+    }
+  }
+}
+.e-citySelector {
+  height: 100px;
+  width: 100%;
+  //overflow: hidden;
+}
+
 .e-vSelect {
   display: inline-block;
   min-width: 400px;
@@ -247,5 +296,46 @@ h1 {
   &.sActive {
     visibility: visible;
   }
+}
+
+.v-select {
+  margin-left: 15px;
+  .dropdown-toggle {
+    border: 1px dashed black;
+    border-radius: 0;
+  }
+  .selected-tag {
+    display: none;
+  }
+
+  input[type='search'] {
+    padding: 10px 0 0 6px;
+    line-height: 3.7px;
+    min-height: 48px;
+
+    &::placeholder {
+      font-family: 'Josefin Slab', serif;
+      font-style: italic;
+      font-size: 3.6rem;
+      color: #166816;
+    }
+
+    &:focus {
+      font-family: 'Josefin Slab', serif;
+      font-style: italic;
+      font-size: 3.6rem;
+      line-height: 3.7px;
+      padding: 3px 0 0 6px;
+      color: #166816;
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.e-bars {
+  background: #dfdfdf7f;
+  flex-basis: 45%;
 }
 </style>
