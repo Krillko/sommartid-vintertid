@@ -104,7 +104,7 @@ export default {
         output[period] = Math.round((timediff / this.hoursBetween.diffM) * 100)
       }
 
-      console.log(output)
+      //console.log(output)
 
       return output
     },
@@ -114,7 +114,9 @@ export default {
     realend: function() {
       const startday = moment(this.day1)
       let thisday = moment(this.day1 + ' ' + this.preferend)
-      thisday.add(1, 'hour')
+      if (thisday.format('m') !== '0') {
+        thisday.add(1, 'hour')
+      }
       return thisday.startOf('hour')
     },
     hoursBetween: function() {
