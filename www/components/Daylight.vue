@@ -138,7 +138,7 @@ export default {
   data() {
     return {
       showAll: true,
-      specificDate: '7 maj' // for debug, add a specific date
+      specificDate: '' // for debug, add a specific date
     }
   },
   computed: {

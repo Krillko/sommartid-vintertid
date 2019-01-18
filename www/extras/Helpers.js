@@ -19,12 +19,12 @@ export const timeOverlap = (
   qEnd,
   offset = 0
 ) => {
-  console.group(baseDate.format('D MMM'))
-  console.log('offset: ' + offset)
-  console.log('preferStart: ' + preferStart.format('MM-DD HH:mm'))
-  console.log('preferEnd: ' + preferEnd.format('MM-DD HH:mm'))
-  console.log('qStart: ' + qStart.format('MM-DD HH:mm'))
-  console.log('qEnd: ' + qEnd.format('MM-DD HH:mm'))
+  //console.group(baseDate.format('D MMM'))
+  //console.log('offset: ' + offset)
+  //console.log('preferStart: ' + preferStart.format('MM-DD HH:mm'))
+  //console.log('preferEnd: ' + preferEnd.format('MM-DD HH:mm'))
+  //console.log('qStart: ' + qStart.format('MM-DD HH:mm'))
+  //console.log('qEnd: ' + qEnd.format('MM-DD HH:mm'))
 
   const summer = isSummer(baseDate.month())
 
@@ -39,12 +39,12 @@ export const timeOverlap = (
    * @todo Perhaps this needs to change to start of next day
    */
   if (offset !== 0) {
-    console.log('qStart before offset: ' + queryStart.format('MM-DD HH:mm'))
-    console.log('qEnd before offset: ' + queryEnd.format('MM-DD HH:mm'))
+    //console.log('qStart before offset: ' + queryStart.format('MM-DD HH:mm'))
+    //console.log('qEnd before offset: ' + queryEnd.format('MM-DD HH:mm'))
     queryStart.add(offset, 'h')
     queryEnd.add(offset, 'h')
-    console.log('qStart after offset: ' + queryStart.format('MM-DD HH:mm'))
-    console.log('qEnd after offset: ' + queryEnd.format('MM-DD HH:mm'))
+    //console.log('qStart after offset: ' + queryStart.format('MM-DD HH:mm'))
+    //console.log('qEnd after offset: ' + queryEnd.format('MM-DD HH:mm'))
   }
 
   if (!queryStart.isValid()) {
@@ -63,28 +63,28 @@ export const timeOverlap = (
     queryStart.isSameOrAfter(preferEnd) ||
     queryEnd.isSameOrBefore(preferStart)
   ) {
-    console.log('out of range')
-    console.groupEnd()
+    //console.log('out of range')
+    //console.groupEnd()
     return 0
   }
 
   if (queryStart.isBefore(preferStart)) {
-    console.log('before')
+    //console.log('before')
     queryStart = preferStart.clone()
   }
   if (queryEnd.isAfter(preferEnd)) {
-    console.log('after')
+    //console.log('after')
     queryEnd = preferEnd.clone()
   }
 
-  console.log('preferStart: ' + preferStart.format('MM-DD HH:mm'))
-  console.log('preferEnd: ' + preferEnd.format('MM-DD HH:mm'))
-  console.log('qStart fixed: ' + queryStart.format('MM-DD HH:mm'))
-  console.log('qEnd fixed: ' + queryEnd.format('MM-DD HH:mm'))
+  //console.log('preferStart: ' + preferStart.format('MM-DD HH:mm'))
+  //console.log('preferEnd: ' + preferEnd.format('MM-DD HH:mm'))
+  //console.log('qStart fixed: ' + queryStart.format('MM-DD HH:mm'))
+  //console.log('qEnd fixed: ' + queryEnd.format('MM-DD HH:mm'))
 
   const result = queryEnd.diff(queryStart, 'm')
-  console.log('Result(min):' + result)
-  console.groupEnd()
+  //console.log('Result(min):' + result)
+  //console.groupEnd()
 
   return result > 0 ? result : 0
 }

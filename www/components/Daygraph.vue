@@ -119,7 +119,7 @@ export default {
           !this.dusk.isValid()
         ) {
           if (isSummer(this.baseDate.month())) {
-            console.log('Midnight sun')
+            //console('Midnight sun')
             qStart = dayStart
             if (period === 'daytime') {
               qEnd = dayEnd
@@ -130,7 +130,7 @@ export default {
             console.warn('Polar winter? Whats going on')
           }
         } else if (!this.sunrise.isValid() && !this.sunset.isValid()) {
-          console.log('Polar winter')
+          //console('Polar winter')
           output.noDawnIcon = true
           switch (period) {
             case 'night1':
@@ -150,7 +150,7 @@ export default {
               qEnd = dayStart
           }
         } else if (!this.dawn.isValid() && !this.dusk.isValid()) {
-          console.log('close to midnight sun')
+          //console('close to midnight sun')
           switch (period) {
             case 'night1':
               qStart = dayStart
@@ -171,11 +171,8 @@ export default {
           }
         }
 
-        // Check for time before/after midnight sun
+        //console.warn(period)
 
-        console.warn(period)
-
-        //console.log(period + ' ' + qStart + '-' + qEnd)
         let timediff = timeOverlap(
           this.baseDate,
           this.realstart,
@@ -186,25 +183,25 @@ export default {
         output[period] = Math.round((timediff / this.hoursBetween.diffM) * 100)
       }
 
-      console.log(output)
+      //console(output)
 
       return output
     },
     realstart: function() {
       const preferArr = this.preferStart.split(':')
 
-      console.log(this.baseDate)
+      //console(this.baseDate)
 
       const output = this.baseDate
         .clone()
         .set({ h: preferArr[0], m: preferArr[1] })
-      console.log(output)
+      //console(output)
       return output
     },
     realend: function() {
       const preferArr = this.preferEnd.split(':')
 
-      console.log(this.baseDate)
+      //console(this.baseDate)
 
       let thisday = this.baseDate
         .clone()
