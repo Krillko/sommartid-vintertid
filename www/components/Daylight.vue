@@ -40,10 +40,10 @@
           :key="day.num"
         >
           <td>{{ day.date }}</td>
-          <td>{{ day.dawn }}</td>
-          <td>{{ day.sunrise }}</td>
-          <td>{{ day.sunset }}</td>
-          <td>{{ day.dusk }}</td>
+          <td>{{ day.dawn.format('HH:mm') }}</td>
+          <td>{{ day.sunrise.format('HH:mm') }}</td>
+          <td>{{ day.sunset.format('HH:mm') }}</td>
+          <td>{{ day.dusk.format('HH:mm') }}</td>
           <td>{{ day.dst }}</td>
           <td>
             <code>
@@ -138,8 +138,8 @@ export default {
   },
   data() {
     return {
-      showAll: false,
-      specificDate: '7 jun'
+      showAll: true,
+      specificDate: '1 jan' // for debug, add a specific date
     }
   },
   computed: {
@@ -169,19 +169,6 @@ export default {
           usedate.format('D MMM') === this.specificDate ||
           this.specificDate === ''
         ) {
-          /*
-          let preferStart = moment(this.year + '-01-01 ' + this.preferStart)
-          let preferEnd
-          if (this.preferEnd === '00:00') {
-            preferEnd = preferStart.clone()
-            preferEnd.add(1, 'd')
-            console.log(preferEnd)
-            preferEnd.startOf('day')
-          } else {
-            console.log(this.preferEnd)
-            preferEnd = moment(this.year + '-01-01 ' + this.preferEnd)
-          }
-          */
           preferStart = usedate
             .clone()
             .set({ h: preferStartIn[0], m: preferStartIn[1] })
@@ -197,8 +184,6 @@ export default {
           sunrise = moment(times.sunrise)
           sunset = moment(times.sunset)
           dusk = moment(times.dusk)
-
-          //console.log(this.pointsSun)
 
           scoreNormal = getTimeScore(
             usedate,
