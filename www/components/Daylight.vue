@@ -71,16 +71,15 @@
           </td>
 
           <td>
-            <!--
             <Daygraph
-              :preferStart="preferStart"
-              :preferEnd="preferEnd"
+              :base-date="day.momentObj"
+              :prefer-start="preferStart"
+              :prefer-end="preferEnd"
               :dawn="day.dawn"
               :sunrise="day.sunrise"
               :sunset="day.sunset"
               :dusk="day.dusk"
             />
-            -->
           </td>
 
         </tr>
@@ -139,7 +138,7 @@ export default {
   data() {
     return {
       showAll: true,
-      specificDate: '1 jan' // for debug, add a specific date
+      specificDate: '7 maj' // for debug, add a specific date
     }
   },
   computed: {
@@ -230,6 +229,7 @@ export default {
 
           output.push({
             num: i,
+            momentObj: usedate.clone(),
             date: usedate.format('D MMM'),
             dawn: dawn,
             sunrise: sunrise,

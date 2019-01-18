@@ -34,40 +34,42 @@
 
 <script>
 import moment from 'moment'
-import { timeOverlap } from '~/extras/Helpers.js'
+import { timeOverlap, isSummer } from '~/extras/Helpers.js'
 
 export default {
   name: 'Daygraph',
   props: {
-    preferstart: {
+    preferStart: {
       type: String,
       required: true
     },
-    preferend: {
+    preferEnd: {
       type: String,
       required: true
     },
     dawn: {
-      type: String,
+      type: Object,
       required: true
     },
     sunrise: {
-      type: String,
+      type: Object,
       required: true
     },
     sunset: {
-      type: String,
+      type: Object,
       required: true
     },
     dusk: {
-      type: String,
+      type: Object,
+      required: true
+    },
+    baseDate: {
+      type: Object,
       required: true
     }
   },
   data() {
-    return {
-      day1: '2018-01-01'
-    }
+    return {}
   },
   computed: {
     graphdata: function() {
@@ -76,10 +78,16 @@ export default {
         qStart,
         qEnd
 
+      const dayStart = this.baseDate.clone().set({ h: 0, m: 0 })
+      const dayEnd = this.baseDate
+        .clone()
+        .add(1, 'd')
+        .startOf('d')
+
       for (let period of periods) {
         switch (period) {
           case 'night1':
-            qStart = '00:00'
+            qStart = dayStart
             qEnd = this.dawn
             break
           case 'morning':
@@ -96,24 +104,78 @@ export default {
             break
           case 'night2':
             qStart = this.dusk
-            qEnd = '23:59'
+            qEnd = dayEnd
             break
         }
+
+        if (
+          !this.dawn.isValid() &&
+          !this.sunrise.isValid() &&
+          !this.sunset.isValid() &&
+          !this.dusk.isValid()
+        ) {
+          console.log('polarnight - midnight sun')
+        } else if (!this.dawn.isValid() && !this.dusk.isValid()) {
+          console.log('close to midnight sun')
+          switch (period) {
+            case 'night1':
+              qStart = dayStart
+              qEnd = dayStart
+              break
+            case 'morning':
+              qStart = dayStart
+              qEnd = this.sunrise
+              break
+            case 'evening':
+              qStart = this.sunset
+              qEnd = dayEnd
+              break
+            case 'night2':
+              qStart = dayEnd
+              qEnd = dayEnd
+              break
+          }
+        }
+
+        // Check for time before/after midnight sun
+
+        console.warn(period)
+
         //console.log(period + ' ' + qStart + '-' + qEnd)
-        let timediff = timeOverlap(this.realstart, this.realend, qStart, qEnd)
+        let timediff = timeOverlap(
+          this.baseDate,
+          this.realstart,
+          this.realend,
+          qStart,
+          qEnd
+        )
         output[period] = Math.round((timediff / this.hoursBetween.diffM) * 100)
       }
 
-      //console.log(output)
+      console.log(output)
 
       return output
     },
     realstart: function() {
-      return moment(this.day1 + ' ' + this.preferstart).startOf('hour')
+      const preferArr = this.preferStart.split(':')
+
+      console.log(this.baseDate)
+
+      const output = this.baseDate
+        .clone()
+        .set({ h: preferArr[0], m: preferArr[1] })
+      console.log(output)
+      return output
     },
     realend: function() {
-      const startday = moment(this.day1)
-      let thisday = moment(this.day1 + ' ' + this.preferend)
+      const preferArr = this.preferEnd.split(':')
+
+      console.log(this.baseDate)
+
+      let thisday = this.baseDate
+        .clone()
+        .set({ h: preferArr[0], m: preferArr[1] })
+
       if (thisday.format('m') !== '0') {
         thisday.add(1, 'hour')
       }

@@ -26,17 +26,7 @@ export const timeOverlap = (
   console.log('qStart: ' + qStart.format('MM-DD HH:mm'))
   console.log('qEnd: ' + qEnd.format('MM-DD HH:mm'))
 
-  /**
-   * There is no way in suncalc today to know if there is midnight sun
-   * or permantent darkness, so we simply decides that some months are
-   * summer, and the rest not.
-   * Note 1: month begins on 0
-   * Note 2: Months with midnight sun are based on Svalbard
-   * north of sweden. If this ever going outside scandinavia, this
-   * quickfix should be replaced
-   * @type {boolean}
-   */
-  const summer = [3, 4, 5, 6, 7].includes(baseDate.month())
+  const summer = isSummer(baseDate.month())
 
   /**
    * We need to clone it, since it will change
@@ -126,17 +116,8 @@ export const getTimeScore = (
   let minSun = 0,
     minDawn = 0,
     minDusk = 0
-  /**
-   * There is no way in suncalc today to know if there is midnight sun
-   * or permantent darkness, so we simply decides that some months are
-   * summer, and the rest not.
-   * Note 1: month begins on 0
-   * Note 2: Months with midnight sun are based on Svalbard
-   * north of sweden. If this ever going outside scandinavia, this
-   * quickfix should be replaced
-   * @type {boolean}
-   */
-  const summer = [3, 4, 5, 6, 7].includes(baseDate.month())
+
+  const summer = isSummer(baseDate.month())
   minSun = timeOverlap(
     baseDate,
     preferstart,
@@ -147,13 +128,14 @@ export const getTimeScore = (
   )
 
   if (summer && !sunrise.isValid() && !sunset.isValid()) {
-    console.log('midnattsol')
+    //console.log('midnattsol')
   } else if (!sunrise.isValid()) {
-    console.log('polarnatt')
-
+    //console.log('polarnatt')
+    /**
+     * During polar night, we at least calculate a dawn/dusk light
+     */
     minDawn = timeOverlap(baseDate, preferstart, preferend, dawn, dusk, offset)
   } else {
-    //console.warn('min dawn')
     minDawn = timeOverlap(
       baseDate,
       preferstart,
@@ -162,7 +144,6 @@ export const getTimeScore = (
       sunrise,
       offset
     )
-    //console.warn('min dusk')
     minDusk = timeOverlap(
       baseDate,
       preferstart,
@@ -191,4 +172,18 @@ export const getTimeScore = (
 export const round = (value, precision) => {
   const multiplier = Math.pow(10, precision || 0)
   return Math.round(value * multiplier) / multiplier
+}
+
+/**
+ * There is no way in suncalc today to know if there is midnight sun
+ * or permantent darkness, so we simply decides that some months are
+ * summer, and the rest not.
+ * Note 1: month begins on 0
+ * Note 2: Months with midnight sun are based on Svalbard
+ * north of sweden. If this ever going outside scandinavia, this
+ * quickfix should be replaced
+ * @param {int} month
+ */
+export const isSummer = month => {
+  return [3, 4, 5, 6, 7].includes(month)
 }
