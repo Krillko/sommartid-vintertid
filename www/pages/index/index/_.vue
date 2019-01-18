@@ -43,12 +43,13 @@
           :time-selection="timeSelection"
           @setTimeselect="setTimeSelect"
         />
-
       </div>
+
       <div class="e-bars">Bars</div>
 
-
-      <section v-if="showResult">
+      <div
+        v-if="showResult"
+        class="e-graph">
         <Daylight
           :lat="getLat"
           :long="getLong"
@@ -59,7 +60,7 @@
         //Todo: add           :points-sun="pointsSun"
         //  :points-dawn-dusk="pointsDawnDusk"
       -->
-      </section>
+      </div>
 
 
     </main>
@@ -302,8 +303,9 @@ export default {
   border: 1px dashed black;
   border-radius: 0;
   display: inline-block;
-  font-family: 'Josefin Slab', serif;
+  font-family: $fontModern;
   font-size: 3.6rem;
+  font-weight: 300;
   padding: 10px 60px 10px 8px;
   position: relative;
   span {
@@ -363,15 +365,17 @@ export default {
     min-height: 48px;
 
     &::placeholder {
-      font-family: 'Josefin Slab', serif;
+      font-family: $fontModern;
+      font-weight: 300;
       font-style: italic;
       font-size: 3.6rem;
       color: #166816;
     }
 
     &:focus {
-      font-family: 'Josefin Slab', serif;
+      font-family: $fontModern;
       font-style: italic;
+      font-weight: 300;
       font-size: 3.6rem;
       line-height: 3.7px;
       padding: 3px 0 0 6px;
@@ -386,5 +390,8 @@ export default {
 .e-bars {
   background: #dfdfdf7f;
   flex-basis: 45%;
+}
+.e-graph {
+  padding: 27px 27px 18px 42px;
 }
 </style>

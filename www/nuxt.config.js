@@ -25,7 +25,7 @@ module.exports = {
       { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Slab:400,400i,700'
+        href: 'https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300,300i,600'
       }
     ]
   },

@@ -9,15 +9,15 @@
     />
     -->
 
+    <!--
     <h4>{{ lat }} {{ long }}</h4>
-
-
     <h3>Days better with constant:</h3>
     <h3>Wintertime: {{ winnerWinterCount }} Summertime: {{ winnerSummerCount }}</h3>
-
     <h3>Scores:</h3>
     <h4>No change: {{ totalScores.noChangeNorm }} Always Winter: {{ totalScores.alwaysWinterNorm }} Always summer: {{ totalScores.alwaysSummerNorm }} </h4>
+    -->
 
+    <!--
     <table>
       <thead>
         <tr>
@@ -85,6 +85,59 @@
         </tr>
       </tbody>
     </table>
+    -->
+    <div
+      v-for="day in timelist"
+      :key="day.num"
+      class="p-row"
+    >
+      <div
+        v-if="day.day === '1'"
+        class="p-month">{{ day.month }}</div>
+
+      <div
+        v-if="day.momentObj.format('MMDD') === '0331'"
+        class="p-changeTime"
+      >
+        Sommartid börjar 2019
+      </div>
+      <div
+        v-if="day.momentObj.format('MMDD') === '1026'"
+        class="p-changeTime"
+      >
+        Vintertid börjar 2019
+      </div>
+
+      <div
+        v-if="day.different || showAll || specificDate !== ''"
+        class="p-day">{{ day.day }}</div>
+      <div
+        v-if="day.different || showAll || specificDate !== ''"
+        class="p-graph">
+        <Daygraph
+          :base-date="day.momentObj"
+          :prefer-start="preferStart"
+          :prefer-end="preferEnd"
+          :dawn="day.dawn"
+          :sunrise="day.sunrise"
+          :sunset="day.sunset"
+          :dusk="day.dusk"
+          :offset="day.dst ? -1:0"
+        />
+        <Daygraph
+          :base-date="day.momentObj"
+          :prefer-start="preferStart"
+          :prefer-end="preferEnd"
+          :dawn="day.dawn"
+          :sunrise="day.sunrise"
+          :sunset="day.sunset"
+          :dusk="day.dusk"
+          :offset="day.dst ? 0:1"
+        />
+      </div>
+
+    </div>
+
   </div>
 </template>
 
@@ -137,7 +190,7 @@ export default {
   },
   data() {
     return {
-      showAll: true,
+      showAll: false,
       specificDate: '' // for debug, add a specific date
     }
   },
@@ -231,11 +284,13 @@ export default {
             num: i,
             momentObj: usedate.clone(),
             date: usedate.format('D MMM'),
+            day: usedate.format('D'),
+            month: usedate.format('MMMM'),
             dawn: dawn,
             sunrise: sunrise,
             sunset: sunset,
             dusk: dusk,
-            dst: usedate.isDST() ? 'Sommartid' : '',
+            dst: usedate.isDST(),
             scoreNormal: scoreNormal,
             alwaysWinter: alwaysWinter,
             alwaysSummer: alwaysSummer,
@@ -283,21 +338,43 @@ export default {
 
 <style scoped lang="scss">
 .e-daylight {
-  margin-top: 40px;
-  tr {
-    &:nth-child(odd) {
-      background: #ededed;
-    }
+  display: inline-block;
+  max-width: 500px;
+  .p-row {
+    display: flex;
+    flex-wrap: wrap;
   }
-  th {
-    padding: 5px;
+  .p-month {
+    font-family: $fontHandWritten;
+    font-size: 3.6rem;
+    text-transform: uppercase;
+    flex-basis: 100%;
+    margin-top: 20px;
+    padding-bottom: 9px;
   }
-  td {
-    padding: 5px;
-    text-align: left;
-    &.winner {
-      background: lightgreen;
-    }
+  .p-changeTime {
+    font-family: $fontHandWritten;
+    font-size: 2.8rem;
+    flex-basis: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px dotted black;
+  }
+  .p-day {
+    font-family: $fontModern;
+    font-size: 4.8rem;
+    font-weight: 300;
+    text-align: center;
+    flex-basis: 50px;
+    flex-grow: 0;
+    height: 105px;
+    padding-top: 31px;
+  }
+  .p-graph {
+    flex-basis: 80%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding-left: 15px;
   }
 }
 </style>

@@ -10,24 +10,39 @@
         class="p-hour"
       ><p>{{ theHour }}</p></div>
     </div>
-    {{ realstart.format('M-D HH:mm') }} {{ realend.format('M-D HH:mm') }} {{ hoursBetween.diffH }}
     <div class="p-graph">
       <div
+        v-if="graphdata.night1 > 0"
         :style="{width: graphdata.night1 + '%'}"
-        class="p-night1"/>
+        class="p-block p-night1"/>
       <div
+        v-if="graphdata.morning > 0"
         :style="{width: graphdata.morning + '%'}"
-        class="p-morning"/>
+        class="p-block p-morning"/>
       <div
+        v-if="graphdata.daytime > 0"
         :style="{width: graphdata.daytime + '%'}"
-        class="p-day"/>
+        class="p-block p-day"/>
       <div
+        v-if="graphdata.evening > 0"
         :style="{width: graphdata.evening + '%'}"
-        class="p-evening"/>
+        class="p-block p-evening"/>
       <div
+        v-if="graphdata.night2 > 0"
         :style="{width: graphdata.night2 + '%'}"
-        class="p-night2"/>
+        class="p-block p-night2"/>
     </div>
+    <!--
+    <div class="p-caption m-notFirst">
+      <div
+        v-for="theHour in hoursBetween.hourArr"
+        :key="theHour"
+        :style="{width: hoursBetween.width + '%'}"
+        class="p-hour"
+      />
+    </div>
+    -->
+
   </div>
 </template>
 
@@ -65,6 +80,12 @@ export default {
     baseDate: {
       type: Object,
       required: true
+    },
+    offset: {
+      type: Number,
+      default: function() {
+        return 0
+      }
     }
   },
   data() {
@@ -178,7 +199,8 @@ export default {
           this.realstart,
           this.realend,
           qStart,
-          qEnd
+          qEnd,
+          this.offset
         )
         output[period] = Math.round((timediff / this.hoursBetween.diffM) * 100)
       }
@@ -238,53 +260,74 @@ export default {
 <style lang="scss">
 .e-dayGraph {
   width: 300px;
+  &:first-child {
+    .p-caption {
+      margin-top: 18px;
+      .p-hour {
+        p {
+          display: inline-block;
+        }
+      }
+    }
+  }
   .p-caption {
     display: flex;
     width: 100%;
-    margin-top: 18px;
+    margin-top: 0;
     .p-hour {
       position: relative;
-      height: 10px;
+      height: 9px;
+      border-right: 1px solid #b5b5b5;
       p {
+        font-family: 'Helvetica Neue', Helvetica, sans-serif;
+        font-size: 1rem;
+        font-weight: bold;
         text-align: center;
         position: absolute;
         top: -15px;
         left: -8px;
+        display: none;
       }
-      &:nth-child(odd) {
-        background: grey;
+      &:first-child {
+        border-left: 1px solid #b5b5b5;
       }
       &:last-child {
-        background: red;
         width: 0 !important;
+        border-right: none;
       }
     }
   }
   .p-graph {
     display: flex;
     width: 100%;
+    .p-block {
+      flex-grow: 1;
+    }
   }
   .p-night1,
   .p-morning,
   .p-day,
   .p-evening,
   .p-night2 {
-    height: 30px;
+    height: 22px;
+    border: 1px solid black;
   }
-  .p-night1 {
-    background: black;
+  .p-night1,
+  .p-night2 {
+    background: black url('/pics/night.svg') no-repeat 3px 3px;
+    background-size: 12px 12px;
   }
   .p-morning {
-    background: gray;
+    background: #c1c1c1 url('/pics/sunrise.svg') no-repeat 3px 3px;
+    background-size: 12px 12px;
   }
   .p-day {
-    background: lightgreen;
+    background: #fcfbfc url('/pics/sun.svg') no-repeat 3px 3px;
+    background-size: 12px 12px;
   }
   .p-evening {
-    background: gray;
-  }
-  .p-night2 {
-    background: black;
+    background: #c1c1c1 url('/pics/sunset.svg') no-repeat 3px 3px;
+    background-size: 12px 12px;
   }
 }
 </style>
