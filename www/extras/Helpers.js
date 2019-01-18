@@ -1,39 +1,26 @@
 import moment from 'moment'
 
 /**
- * Calculates how many minues of qStart/End is inside tStart/End
+ * Calculates how many minues of qStart/End is inside preferstart/End
  * All strings in are minute:second, either 12:01 or 12:1
- * @param {string|NaN|moment} tStart
- * @param {string|NaN|moment} tEnd
- * @param {string|NaN} qStart
- * @param {string|NaN} qEnd
+ * @param {moment} baseDate
+ * @param {string|moment} preferstart
+ * @param {string|moment} preferend
+ * @param {moment} qStart
+ * @param {moment} qEnd
  * @param {number} offset - adds or subtracts, hours
  * @return {number} - in minutes
  */
-export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
-  // The date here doesn't matter, just need to parse
-  const targetStart =
-    tStart instanceof moment ? tStart : moment('2018-11-11 ' + tStart)
-  const targetEnd = tEnd instanceof moment ? tEnd : moment('2018-11-11 ' + tEnd)
-
-  const fixdateStart =
-    tStart instanceof moment ? tStart.format('YYYY-MM-DD ') : '2018-11-11 '
-  const fixdateEnd =
-    tEnd instanceof moment ? tEnd.format('YYYY-MM-DD ') : '2018-11-11 '
-
-  // check nan
-  if (typeof qStart === 'number') {
-    qStart = '0:0'
-  }
-  if (typeof qEnd === 'number') {
-    qEnd = '23:59'
-  }
-
-  let queryStart = moment(fixdateStart + qStart)
-  let queryEnd = moment(fixdateStart + qEnd)
-
+export const timeOverlap = (
+  baseDate,
+  preferstart,
+  preferend,
+  qStart,
+  qEnd,
+  offset = 0
+) => {
   /*
-  if (tStart instanceof moment) {
+  if (preferstart instanceof moment) {
     console.group('Test')
     console.log(fixdateStart)
     console.log(targetStart.format('HH:mm'))
@@ -43,7 +30,12 @@ export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
     console.groupEnd()
   }
   */
+  console.group(baseDate.format('D MMM'))
+  console.log(preferstart)
+  console.log(preferend)
+  console.groupEnd()
 
+  /*
   if (offset !== 0) {
     queryStart.add(offset, 'h')
     queryEnd.add(offset, 'h')
@@ -56,7 +48,9 @@ export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
       queryEnd = moment('2018-11-11 23:59')
     }
   }
+  */
 
+  /*
   if (
     queryStart.isSameOrAfter(targetEnd) ||
     queryEnd.isSameOrBefore(targetStart)
@@ -75,9 +69,24 @@ export const timeOverlap = (tStart, tEnd, qStart, qEnd, offset = 0) => {
   }
 
   return queryEnd.diff(queryStart, 'm')
+  */
+  return 0
 }
-
+/**
+ * @param {moment} baseDate
+ * @param {moment} dawn
+ * @param {moment} sunrise
+ * @param {moment} sunset
+ * @param {moment} dusk
+ * @param {string} preferstart
+ * @param {string} preferend
+ * @param {int} offset
+ * @param {int} pointsSun
+ * @param {int} pointsDawnDusk
+ * @return {{minSun: number, score: number, minDawn: number, minDusk: number}}
+ */
 export const getTimeScore = (
+  baseDate,
   dawn,
   sunrise,
   sunset,
@@ -88,9 +97,30 @@ export const getTimeScore = (
   pointsSun = 1,
   pointsDawnDusk = 0
 ) => {
-  let minSun = timeOverlap(preferstart, preferend, sunrise, sunset, offset)
-  let minDawn = timeOverlap(preferstart, preferend, dawn, sunrise, offset)
-  let minDusk = timeOverlap(preferstart, preferend, sunset, dusk, offset)
+  let minSun = timeOverlap(
+    baseDate,
+    preferstart,
+    preferend,
+    sunrise,
+    sunset,
+    offset
+  )
+  let minDawn = timeOverlap(
+    baseDate,
+    preferstart,
+    preferend,
+    dawn,
+    sunrise,
+    offset
+  )
+  let minDusk = timeOverlap(
+    baseDate,
+    preferstart,
+    preferend,
+    sunset,
+    dusk,
+    offset
+  )
 
   return {
     minSun: minSun,

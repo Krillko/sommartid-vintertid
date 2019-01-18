@@ -47,20 +47,20 @@
       </div>
       <div class="e-bars">Bars</div>
 
-      <!--
+
       <section v-if="showResult">
         <Daylight
           :lat="getLat"
           :long="getLong"
-          :preferstart="timeStart"
-          :preferend="timeEnd"
+          :prefer-start="timeStart"
+          :prefer-end="timeEnd"
         />
-
+      <!--
         //Todo: add           :points-sun="pointsSun"
         //  :points-dawn-dusk="pointsDawnDusk"
-
-      </section>
       -->
+      </section>
+
 
     </main>
 

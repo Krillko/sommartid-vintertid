@@ -36,7 +36,7 @@
       <tbody>
         <tr
           v-for="day in timelist"
-          v-if="day.different || showAll"
+          v-if="day.different || showAll || specificDate !== ''"
           :key="day.num"
         >
           <td>{{ day.date }}</td>
@@ -71,14 +71,16 @@
           </td>
 
           <td>
+            <!--
             <Daygraph
-              :preferstart="preferstart"
-              :preferend="preferend"
+              :preferStart="preferStart"
+              :preferEnd="preferEnd"
               :dawn="day.dawn"
               :sunrise="day.sunrise"
               :sunset="day.sunset"
               :dusk="day.dusk"
             />
+            -->
           </td>
 
         </tr>
@@ -113,11 +115,11 @@ export default {
       type: Number,
       default: 18
     },
-    preferstart: {
+    preferStart: {
       type: String,
       default: '17:00'
     },
-    preferend: {
+    preferEnd: {
       type: String,
       default: '19:00'
     },
@@ -136,7 +138,8 @@ export default {
   },
   data() {
     return {
-      showAll: true
+      showAll: false,
+      specificDate: '7 jun'
     }
   },
   computed: {
@@ -155,79 +158,109 @@ export default {
         minutesSun,
         scoreNormal,
         alwaysWinter,
-        alwaysSummer
+        alwaysSummer,
+        preferStartIn = this.preferStart.split(':'),
+        preferEndIn = this.preferEnd.split(':'),
+        preferStart,
+        preferEnd
 
       while (usedate.year() === this.year) {
-        times = SunCalc.getTimes(usedate.toDate(), this.lat, this.long)
-        dawn = moment(times.dawn).format('HH:mm')
-        sunrise = moment(times.sunrise).format('HH:mm')
-        sunset = moment(times.sunset).format('HH:mm')
-        dusk = moment(times.dusk).format('HH:mm')
+        if (
+          usedate.format('D MMM') === this.specificDate ||
+          this.specificDate === ''
+        ) {
+          /*
+          let preferStart = moment(this.year + '-01-01 ' + this.preferStart)
+          let preferEnd
+          if (this.preferEnd === '00:00') {
+            preferEnd = preferStart.clone()
+            preferEnd.add(1, 'd')
+            console.log(preferEnd)
+            preferEnd.startOf('day')
+          } else {
+            console.log(this.preferEnd)
+            preferEnd = moment(this.year + '-01-01 ' + this.preferEnd)
+          }
+          */
+          preferStart = usedate
+            .clone()
+            .set({ h: preferStartIn[0], m: preferStartIn[1] })
+          preferEnd = usedate
+            .clone()
+            .set({ h: preferEndIn[0], m: preferEndIn[1] })
+          if (this.preferEnd === '00:00') {
+            preferEnd.add(1, 'd')
+          }
 
-        //console.log(this.pointsSun)
+          times = SunCalc.getTimes(usedate.toDate(), this.lat, this.long)
+          dawn = moment(times.dawn)
+          sunrise = moment(times.sunrise)
+          sunset = moment(times.sunset)
+          dusk = moment(times.dusk)
 
-        scoreNormal = getTimeScore(
-          dawn,
-          sunrise,
-          sunset,
-          dusk,
-          this.preferstart,
-          this.preferend,
-          0,
-          this.pointsSun,
-          this.pointsDawnDusk
-        )
+          //console.log(this.pointsSun)
 
-        if (usedate.isDST()) {
-          alwaysSummer = scoreNormal
-          alwaysWinter = getTimeScore(
+          scoreNormal = getTimeScore(
+            usedate,
             dawn,
             sunrise,
             sunset,
             dusk,
-            this.preferstart,
-            this.preferend,
-            -1,
+            preferStart,
+            preferEnd,
+            0,
             this.pointsSun,
             this.pointsDawnDusk
           )
-        } else {
-          alwaysSummer = getTimeScore(
-            dawn,
-            sunrise,
-            sunset,
-            dusk,
-            this.preferstart,
-            this.preferend,
-            1,
-            this.pointsSun,
-            this.pointsDawnDusk
-          )
-          alwaysWinter = scoreNormal
+
+          if (usedate.isDST()) {
+            alwaysSummer = scoreNormal
+            alwaysWinter = getTimeScore(
+              usedate,
+              dawn,
+              sunrise,
+              sunset,
+              dusk,
+              preferStart,
+              preferEnd,
+              -1,
+              this.pointsSun,
+              this.pointsDawnDusk
+            )
+          } else {
+            alwaysSummer = getTimeScore(
+              usedate,
+              dawn,
+              sunrise,
+              sunset,
+              dusk,
+              preferStart,
+              preferEnd,
+              1,
+              this.pointsSun,
+              this.pointsDawnDusk
+            )
+            alwaysWinter = scoreNormal
+          }
+
+          output.push({
+            num: i,
+            date: usedate.format('D MMM'),
+            dawn: dawn,
+            sunrise: sunrise,
+            sunset: sunset,
+            dusk: dusk,
+            dst: usedate.isDST() ? 'Sommartid' : '',
+            scoreNormal: scoreNormal,
+            alwaysWinter: alwaysWinter,
+            alwaysSummer: alwaysSummer,
+            different: alwaysSummer.score !== alwaysWinter.score,
+            winterWinner: alwaysWinter.score > alwaysSummer.score,
+            summerWinner: alwaysSummer.score > alwaysWinter.score
+          })
         }
-
-        output.push({
-          num: i,
-          date: usedate.format('D MMM'),
-          dawn: dawn,
-          sunrise: sunrise,
-          sunset: sunset,
-          dusk: dusk,
-          dst: usedate.isDST() ? 'Sommartid' : '',
-          scoreNormal: scoreNormal,
-          alwaysWinter: alwaysWinter,
-          alwaysSummer: alwaysSummer,
-          different: alwaysSummer.score !== alwaysWinter.score,
-          winterWinner: alwaysWinter.score > alwaysSummer.score,
-          summerWinner: alwaysSummer.score > alwaysWinter.score
-        })
         usedate.add(1, 'd')
         i++
-        /*
-        if (i > 10) {
-          break
-        }
-        */
       }
 
       return output

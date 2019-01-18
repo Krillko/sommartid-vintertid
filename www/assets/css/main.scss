@@ -4,9 +4,9 @@
 @import "typography";
 
 body {
-  background: url("/pics/mockup.png") no-repeat;
-  //background: url("/pics/groovepaper2X.png");
-  //background-size: 300px 300px;
+  //background: url("/pics/mockup.png") no-repeat;
+  background: url("/pics/groovepaper2X.png");
+  background-size: 300px 300px;
 }
 .page-enter-active, .page-leave-active {
   transition: opacity .5s;
