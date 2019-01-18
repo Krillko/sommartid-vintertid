@@ -1,15 +1,14 @@
 <template>
-  <div class="e-dayGraph">
-
+  <div
+    :class="{'m-NoDawnIcon': graphdata.noDawnIcon}"
+    class="e-dayGraph">
     <div class="p-caption">
-
       <div
         v-for="theHour in hoursBetween.hourArr"
         :key="theHour"
         :style="{width: hoursBetween.width + '%'}"
         class="p-hour"
       ><p>{{ theHour }}</p></div>
-
     </div>
     {{ realstart.format('M-D HH:mm') }} {{ realend.format('M-D HH:mm') }} {{ hoursBetween.diffH }}
     <div class="p-graph">
@@ -72,9 +71,14 @@ export default {
     return {}
   },
   computed: {
+    /**
+     * @return {{noDawnIcon: boolean}}
+     */
     graphdata: function() {
       const periods = ['night1', 'morning', 'daytime', 'evening', 'night2']
-      let output = {},
+      let output = {
+          noDawnIcon: false
+        },
         qStart,
         qEnd
 
@@ -114,7 +118,37 @@ export default {
           !this.sunset.isValid() &&
           !this.dusk.isValid()
         ) {
-          console.log('polarnight - midnight sun')
+          if (isSummer(this.baseDate.month())) {
+            console.log('Midnight sun')
+            qStart = dayStart
+            if (period === 'daytime') {
+              qEnd = dayEnd
+            } else {
+              qEnd = dayStart
+            }
+          } else {
+            console.warn('Polar winter? Whats going on')
+          }
+        } else if (!this.sunrise.isValid() && !this.sunset.isValid()) {
+          console.log('Polar winter')
+          output.noDawnIcon = true
+          switch (period) {
+            case 'night1':
+              qStart = dayStart
+              qEnd = this.dawn
+              break
+            case 'morning':
+              qStart = this.dawn
+              qEnd = this.dusk
+              break
+            case 'night2':
+              qStart = this.dusk
+              qEnd = dayEnd
+              break
+            default:
+              qStart = dayStart
+              qEnd = dayStart
+          }
         } else if (!this.dawn.isValid() && !this.dusk.isValid()) {
           console.log('close to midnight sun')
           switch (period) {
