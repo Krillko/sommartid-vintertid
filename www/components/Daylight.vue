@@ -99,13 +99,13 @@
         v-if="day.momentObj.format('MMDD') === '0331'"
         class="p-changeTime"
       >
-        Sommartid börjar 2019
+        Sommartid börjar 31 mars 2019
       </div>
       <div
         v-if="day.momentObj.format('MMDD') === '1026'"
         class="p-changeTime"
       >
-        Vintertid börjar 2019
+        Vintertid börjar 26 okt 2019
       </div>
 
       <div
