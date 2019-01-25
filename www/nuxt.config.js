@@ -89,6 +89,7 @@ module.exports = {
     */
     extend: (config, ctx) => {
       // Run ESLint on save
+      /*
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -97,8 +98,10 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+      */
+
       // vue-svg-loader
-      const svgRule = config.module.rules.find(rule => rule.test.test('.svg'));
+      const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
 
       svgRule.test = /\.(png|jpe?g|gif|webp)$/
 
