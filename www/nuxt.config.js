@@ -17,15 +17,34 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/favicon/apple-touch-icon.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon/favicon-32x32.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/favicon/favicon-16x16.png'
+      },
       { rel: 'manifest', href: '/favicon/site.webmanifest' },
-      { rel: 'mask-icon', color: '#000000', href: '/favicon/safari-pinned-tab.svg' },
+      {
+        rel: 'mask-icon',
+        color: '#000000',
+        href: '/favicon/safari-pinned-tab.svg'
+      },
       { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300,300i,600'
+        href:
+          'https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300,300i,600'
       }
     ]
   },
@@ -43,9 +62,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-    { src: '~/plugins/vSelect', ssr: false}
-  ],
+  plugins: [{ src: '~/plugins/vSelect', ssr: false }],
 
   /*
   ** Nuxt.js modules

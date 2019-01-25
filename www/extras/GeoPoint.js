@@ -1,8 +1,8 @@
 class GeoPoint {
-  CHAR_DEG = "\u00B0"
-  CHAR_MIN = "\u0027"
-  CHAR_SEC = "\u0022"
-  CHAR_SEP = "\u0020"
+  CHAR_DEG = '\u00B0'
+  CHAR_MIN = '\u0027'
+  CHAR_SEC = '\u0022'
+  CHAR_SEP = '\u0020'
 
   MAX_LON = 180
   MAX_LAT = 90
