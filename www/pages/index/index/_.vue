@@ -46,7 +46,16 @@
       </div>
 
       <div class="e-bars">
-        <Summary/>
+        <Summary v-if="showResult"/>
+        <div
+          v-if="!showResult"
+          class="e-introText">
+          <h4>Sluta ställa om klockan?</h4>
+          <p>Enligt förslag för EU kommisionen skall EU sluta ställa om klockan två gånger om året. I mars 2019 ska det röstas om förslaget.</p>
+          <p>Därefter skall varje medlemsland bestämma om de vill ha permanent sommar- eller vintertid.</p>
+          <p>31 mars 2019 ställer alla som vanligt om till sommartid. För del länder som väljer en är det sista omställningen någonsin. För de som väljer vintertid blir sista omställningen 27 oktober</p>
+          <p>Välj stad till vänster för att se om det vore bäst med permanent sommar- eller vintertid.</p>
+        </div>
       </div>
 
       <div
@@ -417,5 +426,19 @@ export default {
 }
 .e-graph {
   padding: 27px 27px 18px 42px;
+}
+
+.e-introText {
+  background: #fafafa;
+  padding: 20px;
+  margin: 0 40px 20px 20px;
+  border: 1px solid black;
+  p {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+  }
 }
 </style>
