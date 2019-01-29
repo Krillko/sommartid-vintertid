@@ -1,8 +1,8 @@
 export const state = () => ({
   summary: {
-    keepChanging: -1,
-    onlySummer: -1,
-    onlyWinter: -1
+    keepChanging: 0,
+    onlySummer: 0,
+    onlyWinter: 0
   }
 })
 

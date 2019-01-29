@@ -276,6 +276,7 @@ export default {
     display: inline-block;
     line-height: 3.7px;
     .p-city {
+      line-height: 3.7px;
       display: inline-block;
       border: 1px dashed black;
       padding: 29px 72px 24px 12px;
@@ -335,6 +336,11 @@ export default {
   .dropdown-toggle {
     border: 1px dashed black;
     border-radius: 0;
+
+    // List of cities and toggle button
+    .vs__actions {
+      @include noTextSelect;
+    }
   }
   .selected-tag {
     display: none;
@@ -360,6 +366,7 @@ export default {
       width: 38px;
       height: 22px;
       margin-top: 6px;
+      transform: rotate(0);
     }
   }
 

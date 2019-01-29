@@ -1,70 +1,68 @@
 <template>
-  <transition name="fade">s
-    <div v-if="keepChanging > -1">
-      <div class="e-summary">
+  <div>
+    <div class="e-summary">
+      <div
+        :style="{ height: keepChanging + '%' }"
+        :class="medalkeepChanging"
+        class="e-staple"
+      >
+        <div class="p-bg"/>
+        <div class="p-main"/>
         <div
-          :style="{ height: keepChanging + '%' }"
-          :class="medalkeepChanging"
-          class="e-staple"
-        >
-          <div class="p-bg"/>
-          <div class="p-main"/>
-          <div
-            :class="{ 'm-top': (keepChanging >= 30), 'm-bottom': (keepChanging < 30) }"
-            class="p-score"
-          >{{ Math.round(keepChanging) }}%</div>
-          <Medal class="p-medal"/>
-        </div>
-
-        <div
-          :style="{ height: onlySummer + '%' }"
-          :class="medalonlySummer"
-          class="e-staple">
-          <div class="p-bg"/>
-          <div class="p-main" />
-          <div
-            :class="{ 'm-top': (onlySummer >= 30), 'm-bottom': (onlySummer < 30) }"
-            class="p-score"
-          >{{ Math.round(onlySummer) }}%</div>
-          <Medal class="p-medal"/>
-        </div>
-
-        <div
-          :style="{ height: onlyWinter + '%' }"
-          :class="medalonlyWinter"
-          class="e-staple">
-          <div class="p-bg"/>
-          <div class="p-main"/>
-          <div
-            :class="{ 'm-top': (onlyWinter >= 30), 'm-bottom': (onlyWinter < 30) }"
-            class="p-score"
-          >{{ Math.round(onlyWinter) }}%</div>
-          <Medal class="p-medal"/>
-        </div>
-
+          :class="{ 'm-top': (keepChanging >= 30), 'm-bottom': (keepChanging < 30) }"
+          class="p-score"
+        >{{ Math.round(keepChanging) }}%</div>
+        <Medal class="p-medal"/>
       </div>
-      <div class="e-summaryCaption">
-        <div class="p-caption">
-          <img
-            src="/pics/keepChanging.svg"
-            alt="Fortsätta byta">
-          <span>Fortsätta byta</span>
-        </div>
-        <div class="p-caption">
-          <img
-            src="/pics/summertime.svg"
-            alt="Bara sommartid">
-          <span>Bara sommartid</span>
-        </div>
-        <div class="p-caption">
-          <img
-            src="/pics/wintertime.svg"
-            alt="Bara Vintertid">
-          <span>Bara Vintertid</span>
-        </div>
+
+      <div
+        :style="{ height: onlySummer + '%' }"
+        :class="medalonlySummer"
+        class="e-staple">
+        <div class="p-bg"/>
+        <div class="p-main" />
+        <div
+          :class="{ 'm-top': (onlySummer >= 30), 'm-bottom': (onlySummer < 30) }"
+          class="p-score"
+        >{{ Math.round(onlySummer) }}%</div>
+        <Medal class="p-medal"/>
+      </div>
+
+      <div
+        :style="{ height: onlyWinter + '%' }"
+        :class="medalonlyWinter"
+        class="e-staple">
+        <div class="p-bg"/>
+        <div class="p-main"/>
+        <div
+          :class="{ 'm-top': (onlyWinter >= 30), 'm-bottom': (onlyWinter < 30) }"
+          class="p-score"
+        >{{ Math.round(onlyWinter) }}%</div>
+        <Medal class="p-medal"/>
+      </div>
+
+    </div>
+    <div class="e-summaryCaption">
+      <div class="p-caption">
+        <img
+          src="/pics/keepChanging.svg"
+          alt="Fortsätta byta">
+        <span>Fortsätta byta</span>
+      </div>
+      <div class="p-caption">
+        <img
+          src="/pics/summertime.svg"
+          alt="Bara sommartid">
+        <span>Bara sommartid</span>
+      </div>
+      <div class="p-caption">
+        <img
+          src="/pics/wintertime.svg"
+          alt="Bara Vintertid">
+        <span>Bara Vintertid</span>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
