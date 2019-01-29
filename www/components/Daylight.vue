@@ -1,14 +1,5 @@
 <template>
   <div class="e-daylight">
-
-    <!--
-    <Summary
-      :keep-changing="totalScores.noChangeNorm"
-      :only-summer="totalScores.alwaysSummerNorm"
-      :only-winter="totalScores.alwaysWinterNorm"
-    />
-    -->
-
     <!--
     <h4>{{ lat }} {{ long }}</h4>
     <h3>Days better with constant:</h3>

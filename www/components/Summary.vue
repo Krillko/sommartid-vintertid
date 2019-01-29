@@ -1,68 +1,70 @@
 <template>
-  <span>
-    <div class="e-summary">
-      <div
-        :style="{ height: keepChanging + '%' }"
-        :class="medalkeepChanging"
-        class="e-staple"
-      >
-        <div class="p-bg"/>
-        <div class="p-main"/>
+  <transition name="fade">s
+    <div v-if="keepChanging > -1">
+      <div class="e-summary">
         <div
-          :class="{ 'm-top': (keepChanging >= 30), 'm-bottom': (keepChanging < 30) }"
-          class="p-score"
-        >{{ Math.round(keepChanging) }}%</div>
-        <Medal class="p-medal"/>
-      </div>
+          :style="{ height: keepChanging + '%' }"
+          :class="medalkeepChanging"
+          class="e-staple"
+        >
+          <div class="p-bg"/>
+          <div class="p-main"/>
+          <div
+            :class="{ 'm-top': (keepChanging >= 30), 'm-bottom': (keepChanging < 30) }"
+            class="p-score"
+          >{{ Math.round(keepChanging) }}%</div>
+          <Medal class="p-medal"/>
+        </div>
 
-      <div
-        :style="{ height: onlySummer + '%' }"
-        :class="medalonlySummer"
-        class="e-staple">
-        <div class="p-bg"/>
-        <div class="p-main" />
         <div
-          :class="{ 'm-top': (onlySummer >= 30), 'm-bottom': (onlySummer < 30) }"
-          class="p-score"
-        >{{ Math.round(onlySummer) }}%</div>
-        <Medal class="p-medal"/>
-      </div>
+          :style="{ height: onlySummer + '%' }"
+          :class="medalonlySummer"
+          class="e-staple">
+          <div class="p-bg"/>
+          <div class="p-main" />
+          <div
+            :class="{ 'm-top': (onlySummer >= 30), 'm-bottom': (onlySummer < 30) }"
+            class="p-score"
+          >{{ Math.round(onlySummer) }}%</div>
+          <Medal class="p-medal"/>
+        </div>
 
-      <div
-        :style="{ height: onlyWinter + '%' }"
-        :class="medalonlyWinter"
-        class="e-staple">
-        <div class="p-bg"/>
-        <div class="p-main"/>
         <div
-          :class="{ 'm-top': (onlyWinter >= 30), 'm-bottom': (onlyWinter < 30) }"
-          class="p-score"
-        >{{ Math.round(onlyWinter) }}%</div>
-        <Medal class="p-medal"/>
-      </div>
+          :style="{ height: onlyWinter + '%' }"
+          :class="medalonlyWinter"
+          class="e-staple">
+          <div class="p-bg"/>
+          <div class="p-main"/>
+          <div
+            :class="{ 'm-top': (onlyWinter >= 30), 'm-bottom': (onlyWinter < 30) }"
+            class="p-score"
+          >{{ Math.round(onlyWinter) }}%</div>
+          <Medal class="p-medal"/>
+        </div>
 
+      </div>
+      <div class="e-summaryCaption">
+        <div class="p-caption">
+          <img
+            src="/pics/keepChanging.svg"
+            alt="Fortsätta byta">
+          <span>Fortsätta byta</span>
+        </div>
+        <div class="p-caption">
+          <img
+            src="/pics/summertime.svg"
+            alt="Bara sommartid">
+          <span>Bara sommartid</span>
+        </div>
+        <div class="p-caption">
+          <img
+            src="/pics/wintertime.svg"
+            alt="Bara Vintertid">
+          <span>Bara Vintertid</span>
+        </div>
+      </div>
     </div>
-    <div class="e-summaryCaption">
-      <div class="p-caption">
-        <img
-          src="/pics/keepChanging.svg"
-          alt="Fortsätta byta">
-        <span>Fortsätta byta</span>
-      </div>
-      <div class="p-caption">
-        <img
-          src="/pics/summertime.svg"
-          alt="Bara sommartid">
-        <span>Bara sommartid</span>
-      </div>
-      <div class="p-caption">
-        <img
-          src="/pics/wintertime.svg"
-          alt="Bara Vintertid">
-        <span>Bara Vintertid</span>
-      </div>
-    </div>
-  </span>
+  </transition>
 </template>
 
 <script>
@@ -133,11 +135,22 @@ export default {
 </script>
 
 <style lang="scss">
+.e-summary,
+.e-summaryCaption {
+  width: 100%;
+  max-width: 574px;
+
+  .p-caption {
+    width: 33%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
 .e-summary {
   display: flex;
   align-items: flex-end;
-  margin-bottom: 10px;
-  width: 800px;
+  margin-bottom: 8px;
   height: 400px;
   border-bottom: 2px solid black;
   overflow: hidden;
@@ -145,14 +158,14 @@ export default {
 .e-summaryCaption {
   display: flex;
   align-items: flex-end;
-  width: 800px;
+  width: 100%;
   font-family: 'EB Garamond', serif;
   //text-transform: lowercase;
   font-size: 24px;
   .p-caption {
-    width: 33%;
-    margin-left: 20px;
-    margin-right: 20px;
+    font-family: $fontModern;
+    font-size: 1.6rem;
+    font-weight: 600;
     text-align: center;
     img {
       display: inline-block;
@@ -169,9 +182,18 @@ export default {
   background: #7f828b;
   width: 33%;
   position: relative;
-  margin-left: 45px;
-  margin-right: 45px;
+  margin-left: 30px;
+  margin-right: 22px;
   transition: height 1s;
+  //opacity: 0.5;
+
+  &:first-of-type {
+    margin-left: 31px;
+  }
+  &:last-of-type {
+    margin-right: 34px;
+  }
+
   .p-main {
     width: 100%;
     height: 100%;
@@ -183,8 +205,8 @@ export default {
     border-right: 2px solid black;
   }
   .p-score {
-    font-family: 'Roboto', sans-serif;
-    font-size: 60px;
+    font-family: $fontModern;
+    font-size: 5.6rem;
     position: absolute;
     bottom: 20px;
     width: 100%;

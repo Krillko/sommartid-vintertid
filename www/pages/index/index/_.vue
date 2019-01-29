@@ -270,7 +270,7 @@ export default {
 }
 .e-selectors {
   //background: #ededed7f;
-  flex-basis: 55%;
+  flex-basis: 49%;
   padding: 18px 27px;
   h2 {
     display: inline-block;
@@ -392,8 +392,8 @@ export default {
 }
 
 .e-bars {
-  background: #dfdfdf7f;
-  flex-basis: 45%;
+  padding-top: 30px;
+  flex-basis: 51%;
 }
 .e-graph {
   padding: 27px 27px 18px 42px;

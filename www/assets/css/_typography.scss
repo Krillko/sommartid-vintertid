@@ -1,3 +1,4 @@
+@import "mixins";
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 400;
@@ -5,12 +6,12 @@ body {
 }
 
 h1 {
-  font-family: "Fredericka the Great", cursive;
+  font-family: $fontHandWritten;
   font-size: 8.5rem;
 
 }
 h2, .a-asH2 {
-  font-family: "Josefin Slab", serif;
+  font-family: $fontModern;
   font-weight: 400;
   font-size: 3.6rem;
 }
