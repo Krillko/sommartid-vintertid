@@ -45,7 +45,9 @@
         />
       </div>
 
-      <div class="e-bars">
+      <div
+        :class="{ 'm-ShowBars': showResult }"
+        class="e-bars">
         <Summary v-if="showResult"/>
         <div
           v-if="!showResult"
@@ -423,22 +425,57 @@ export default {
   padding-top: 30px;
   flex-basis: 51%;
   flex-grow: 1;
+  padding-right: 10px;
 }
 .e-graph {
   padding: 27px 27px 18px 42px;
 }
 
 .e-introText {
+  display: inline-block;
+  max-width: 800px;
   background: #fafafa;
   padding: 20px;
   margin: 0 40px 20px 20px;
   border: 1px solid black;
+
   p {
     font-family: 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.5em;
     margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .e-selectors {
+    flex-basis: 60%;
+  }
+  .e-bars {
+    flex-basis: 40%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .e-selectors {
+    flex-basis: 100%;
+  }
+  .e-bars {
+    flex-basis: 40%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    font-size: 4.5rem;
+  }
+  .e-selectors {
+    flex-basis: 100%;
+  }
+  .e-bars {
+    flex-basis: 100%;
+    padding-left: 10px;
   }
 }
 </style>
