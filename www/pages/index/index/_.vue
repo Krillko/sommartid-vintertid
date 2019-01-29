@@ -15,7 +15,7 @@
 
       <div class="e-selectors">
         <div class="e-citySelector">
-          <h2>Vad är bäst i <div
+          <h2><span>Vad är bäst i </span><div
             v-if="!showSearch"
             class="p-city"
             @click="focusSearch"
@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <h2>Om man vill ha som mest ljus</h2>
+        <h2><span>Om man vill ha som mest ljus </span></h2>
         <Timeselector
           :time-selected="timeSelected"
           :time-selection="timeSelection"
@@ -271,12 +271,19 @@ export default {
 .e-selectors {
   //background: #ededed7f;
   flex-basis: 49%;
+  max-width: 740px;
+
   padding: 18px 27px;
   h2 {
     display: inline-block;
-    line-height: 3.7px;
+    line-height: 3.7rem;
+
+    span {
+      padding-right: 10px;
+    }
+
     .p-city {
-      line-height: 3.7px;
+      line-height: 1rem;
       display: inline-block;
       border: 1px dashed black;
       padding: 29px 72px 24px 12px;
@@ -286,21 +293,26 @@ export default {
     }
   }
   .e-dropselector {
-    margin: 17px 0 0 2px;
+    margin: 10px 0 0 2px;
   }
 }
 .e-citySelector {
-  height: 100px;
+  //height: 100px;
   width: 100%;
   //overflow: hidden;
+  margin-bottom: 20px;
+  h2 {
+    margin-bottom: 10px;
+  }
 }
 
 .e-vSelect {
-  display: inline-block;
+  display: none;
   min-width: 400px;
-  visibility: hidden;
+  //visibility: hidden;
   &.sActive {
-    visibility: visible;
+    display: inline-block;
+    //visibility: visible;
   }
 }
 
@@ -332,7 +344,7 @@ export default {
 }
 
 .v-select {
-  margin-left: 15px;
+  //margin-left: 15px;
   .dropdown-toggle {
     border: 1px dashed black;
     border-radius: 0;
@@ -372,7 +384,7 @@ export default {
 
   input[type='search'] {
     padding: 10px 0 0 6px;
-    line-height: 3.7px;
+    line-height: 3.7rem;
     min-height: 48px;
 
     &::placeholder {
@@ -388,7 +400,7 @@ export default {
       font-style: italic;
       font-weight: 300;
       font-size: 3.6rem;
-      line-height: 3.7px;
+      line-height: 3.7rem;
       padding: 3px 0 0 6px;
       color: #166816;
       &::placeholder {
@@ -401,6 +413,7 @@ export default {
 .e-bars {
   padding-top: 30px;
   flex-basis: 51%;
+  flex-grow: 1;
 }
 .e-graph {
   padding: 27px 27px 18px 42px;
