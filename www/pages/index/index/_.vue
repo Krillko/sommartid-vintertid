@@ -45,7 +45,9 @@
         />
       </div>
 
-      <div class="e-bars">Bars</div>
+      <div class="e-bars">
+        <Summary/>
+      </div>
 
       <div
         v-if="showResult"
@@ -71,6 +73,7 @@
 <script>
 import Daylight from '~/components/Daylight.vue'
 import Timeselector from '~/components/Timeselector.vue'
+import Summary from '~/components/Summary.vue'
 
 export default {
   name: 'FullPage',
@@ -93,7 +96,8 @@ export default {
   },
   components: {
     Daylight,
-    Timeselector
+    Timeselector,
+    Summary
   },
   data() {
     return {

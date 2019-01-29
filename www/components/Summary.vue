@@ -75,25 +75,22 @@ export default {
     Medal
     //AnimatedNumber
   },
-  props: {
-    keepChanging: {
-      type: Number,
-      default: 100
-    },
-    onlySummer: {
-      type: Number,
-      default: 100
-    },
-    onlyWinter: {
-      type: Number,
-      default: 100
-    }
-  },
   data: function() {
     return {
       medalkeepChanging: '',
       medalonlySummer: '',
       medalonlyWinter: ''
+    }
+  },
+  computed: {
+    keepChanging() {
+      return this.$store.state.totalScores.summary.keepChanging
+    },
+    onlySummer() {
+      return this.$store.state.totalScores.summary.onlySummer
+    },
+    onlyWinter() {
+      return this.$store.state.totalScores.summary.onlyWinter
     }
   },
   asyncData(context) {
