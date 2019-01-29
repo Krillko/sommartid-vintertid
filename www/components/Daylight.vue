@@ -303,6 +303,28 @@ export default {
         i++
       }
 
+      // Stores the summary in vuex
+      const summaryNoChange = output
+        .map(item => item.scoreNormal.score)
+        .reduce((prev, next) => prev + next)
+      const summaryAlwaysWinter = output
+        .map(item => item.alwaysWinter.score)
+        .reduce((prev, next) => prev + next)
+      const SummaryAlwaysSummer = output
+        .map(item => item.alwaysSummer.score)
+        .reduce((prev, next) => prev + next)
+      const SummaryMax = Math.max(
+        summaryNoChange,
+        summaryAlwaysWinter,
+        SummaryAlwaysSummer
+      )
+
+      this.$store.commit('totalScores/setValues', {
+        keepChanging: round((summaryNoChange / SummaryMax) * 100, 2),
+        onlySummer: round((SummaryAlwaysSummer / SummaryMax) * 100, 2),
+        onlyWinter: round((summaryAlwaysWinter / SummaryMax) * 100, 2)
+      })
+
       return output
     },
     winnerWinterCount: function() {
@@ -310,7 +332,8 @@ export default {
     },
     winnerSummerCount: function() {
       return this.timelist.filter(r => r.summerWinner).length
-    },
+    }
+    /*
     totalScores: function() {
       const noChange = this.timelist
         .map(item => item.scoreNormal.score)
@@ -332,6 +355,7 @@ export default {
         alwaysSummerNorm: round((alwaysSummer / max) * 100, 2)
       }
     }
+    */
   }
 }
 </script>
